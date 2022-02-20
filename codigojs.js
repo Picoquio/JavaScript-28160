@@ -48,6 +48,25 @@ pushTotal(auto6);
 pushTotal(auto7);
 pushTotal(auto8);
 
+//Función que se utilizará más abajo para filtrar autos según la marca
+const filtroPorMarca = (Marca) => {
+    /* el parámetro "Marca" sirve para indicarle al código qué value filtrar en los objetos del array "stockTotal". Ver más arriba en la instanciación de los autos 
+    cómo escribir los nombres de las marcas. P.ej.: 'Honda', 'Ford', etc. */
+        nuevoArray = stockTotal.filter( objeto => {
+        return objeto.marca === Marca
+    })
+
+    let numeracion= 1;  //Para que en el console.log del for siguiente aparezcan los autos de manera enumerada.
+    for (let i = 0; i < nuevoArray.length; i++) {
+        if (i <= 0) {
+            console.log(`A continuación, los vehículos marca ${Marca} en nuestro stock`)
+        }
+        
+        console.log(`${numeracion}. Modelo: ${nuevoArray[i].modelo}. Estado: ${nuevoArray[i].estado} Año: ${nuevoArray[i].año}. Precio: ${nuevoArray[i].precio}`)
+        numeracion += 1;
+    }
+}
+
 //pedimos input al usuario
 const promptPpal = prompt('Ingrese 1 para ofrecernos su auto. Ingrese 2 para consultar por nuestro stock de vehículos')
 
@@ -60,7 +79,6 @@ if (promptPpal === '1') {
     )
     alert(`Nos ha ofrecido un ${userPrompt.marca} modelo ${userPrompt.modelo}, del año ${userPrompt.año} por un precio de ${userPrompt.precio}. En breve lo contactaremos, muchas gracias.`)
 }
-
 
 else if (promptPpal === '2') {
     const propmtStock = prompt('Ingrese 1 para ver nuestro stock total de vehículos. Ingrese 2 para ver el stock de vehículos HONDA. Ingrese 3 para ver el stock de vehículos FORD. Ingrese 4 para ver el stock de vehículos TOYOTA.')
@@ -78,62 +96,22 @@ else if (promptPpal === '2') {
         }
     }
 
-
     else if (propmtStock === '2') {
-         //filtramos los objetos que tengan 'Honda' como value en la key 'marca' dentro del array 'stockTotal'
-        const stockHonda = stockTotal.filter( objeto => {
-            return objeto.marca === 'Honda'
-        })
-        
-        let numeracion= 1;  //Para que en el console.log del for siguiente aparezcan los autos de manera enumerada.
-        for (let i = 0; i < stockHonda.length; i++) {
-            if (i <= 0) {
-                console.log('A continuación, los vehículos marca Honda en nuestro stock')
-            }
-            
-            console.log(`${numeracion}. Modelo: ${stockHonda[i].modelo}. Estado: ${stockHonda[i].estado} Año: ${stockHonda[i].año}. Precio: ${stockHonda[i].precio}`)
-            numeracion += 1;
-        }
+        filtroPorMarca('Honda')
     }
+    
 
     else if (propmtStock === '3') {
-        //filtramos los objetos que tengan 'Ford' como value en la key 'marca' dentro del array 'stockTotal'
-        const stockFord = stockTotal.filter( objeto => {
-            return objeto.marca === 'Ford'
-        })
-        
-        let numeracion= 1;  //Para que en el console.log del for siguiente aparezcan los autos de manera enumerada.
-        for (let i = 0; i < stockFord.length; i++) {
-            if (i <= 0) {
-                console.log('A continuación, los vehículos marca Ford en nuestro stock')
-            }
-            
-            console.log(`${numeracion}. Modelo: ${stockFord[i].modelo}. Estado: ${stockFord[i].estado} Año: ${stockFord[i].año}. Precio: ${stockFord[i].precio}`)
-            numeracion += 1;
-        }
-        
+        filtroPorMarca('Ford')  
     }
 
+   
     else if (propmtStock === '4') {
-        //filtramos los objetos que tengan 'Toyota' como value en la key 'marca' dentro del array 'stockTotal'
-        const stockToyota = stockTotal.filter( objeto => {
-            return objeto.marca === 'Toyota'
-        })
-
-        let numeracion= 1;  //Para que en el console.log del for siguiente aparezcan los autos de manera enumerada.
-        for (let i = 0; i < stockToyota.length; i++) {
-            if (i <= 0) {
-                console.log('A continuación, los vehículos marca Toyota en nuestro stock')
-            }
-            
-            console.log(`${numeracion}. Modelo: ${stockToyota[i].modelo}. Estado: ${stockToyota[i].estado} Año: ${stockToyota[i].año}. Precio: ${stockToyota[i].precio}`)
-            numeracion += 1;
-        }
-
-
-    }
-
-
+        filtroPorMarca('Toyota')
+    };
 }
+ 
+
+
 
 
