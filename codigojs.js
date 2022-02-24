@@ -59,10 +59,17 @@ const filtroPorMarca = (Marca) => {
     let numeracion= 1;  //Para que en el console.log del for siguiente aparezcan los autos de manera enumerada.
     for (let i = 0; i < nuevoArray.length; i++) {
         if (i <= 0) {
-            console.log(`A continuación, los vehículos marca ${Marca} en nuestro stock`)
+
+            let crear1 = document.createElement('p');
+            crear1.innerHTML =  `<h2>A continuación, los vehículos marca ${Marca}:</h2>`
+            document.body.appendChild(crear1);
+            // console.log(`A continuación, los vehículos marca ${Marca} en nuestro stock`)
         }
         
-        console.log(`${numeracion}. Modelo: ${nuevoArray[i].modelo}. Estado: ${nuevoArray[i].estado} Año: ${nuevoArray[i].año}. Precio: ${nuevoArray[i].precio}`)
+        let crear2 = document.createElement('p');
+        crear2.innerHTML = `${numeracion}. Modelo: ${nuevoArray[i].modelo}. Estado: ${nuevoArray[i].estado} Año: ${nuevoArray[i].año}. Precio: ${nuevoArray[i].precio}`;
+        document.body.appendChild(crear2);
+        // console.log(`${numeracion}. Modelo: ${nuevoArray[i].modelo}. Estado: ${nuevoArray[i].estado} Año: ${nuevoArray[i].año}. Precio: ${nuevoArray[i].precio}`)
         numeracion += 1;
     }
 }
@@ -77,7 +84,9 @@ if (promptPpal === '1') {
         parseInt(prompt('Ingrese el año de fabricación')),
         parseInt(prompt('Ingrese el precio que pretende recibir'))
     )
-    alert(`Nos ha ofrecido un ${userPrompt.marca} modelo ${userPrompt.modelo}, del año ${userPrompt.año} por un precio de ${userPrompt.precio}. En breve lo contactaremos, muchas gracias.`)
+    let buscaId = document.getElementById('uno');
+    buscaId.innerHTML = `Nos ha ofrecido un ${userPrompt.marca} modelo ${userPrompt.modelo}, del año ${userPrompt.año} por un precio de ${userPrompt.precio}. En breve lo contactaremos, muchas gracias.`
+    //alert(`Nos ha ofrecido un ${userPrompt.marca} modelo ${userPrompt.modelo}, del año ${userPrompt.año} por un precio de ${userPrompt.precio}. En breve lo contactaremos, muchas gracias.`)
 }
 
 else if (promptPpal === '2') {
@@ -88,10 +97,17 @@ else if (promptPpal === '2') {
 
         for (let i = 0; i < stockTotal.length; i++) {
             if (i <= 0) {
-                console.log('A continuación, el stock total de autos')
+                let crear1 = document.createElement('p');
+                crear1.innerHTML = '<h2>A continuación, el stock total de automóviles:</h2>'
+                document.body.appendChild(crear1);
+        
+               // console.log('A continuación, el stock total de autos')
             }
             
-            console.log(`${numeracion}. Marca: ${stockTotal[i].marca}. Modelo: ${stockTotal[i].modelo}. Estado: ${stockTotal[i].estado} Año: ${stockTotal[i].año}. Precio: ${stockTotal[i].precio}`)
+            let crear2 = document.createElement('p');
+            crear2.innerHTML = `${numeracion}. Marca: ${stockTotal[i].marca}. Modelo: ${stockTotal[i].modelo}. Estado: ${stockTotal[i].estado} Año: ${stockTotal[i].año}. Precio: ${stockTotal[i].precio}`;
+            document.body.appendChild(crear2);
+           // console.log(`${numeracion}. Marca: ${stockTotal[i].marca}. Modelo: ${stockTotal[i].modelo}. Estado: ${stockTotal[i].estado} Año: ${stockTotal[i].año}. Precio: ${stockTotal[i].precio}`)
             numeracion += 1;
         }
     }
