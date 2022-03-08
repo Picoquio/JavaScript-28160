@@ -80,29 +80,28 @@ pushTotal(auto8);
     const mostrarStockTotal = document.getElementById('mostrarStockTotal');
     const darkMode = document.getElementById('darkMode');
 
-    // function que pone en el innerHTML los autos que correspondan. Hago esta function para evitar lineas de código más abajo
-    const llenaDiv = (stockMarca, stockModelo, stockAño, stockPrecio, stockEstado) => {
-        cardsAutos.innerHTML += `
-                <div class="card" style="width: 18rem; display: inline-block">
-                    <div class="card-body">
-                        <h5 class="card-title"> ${stockMarca} ${stockModelo}</h5>
-                        <p class="card-text">
-                            <ul>
-                                <li>Año: ${stockAño}</li>
-                                <li>Precio: ${stockPrecio}</li>
-                                <li>Estado: ${stockEstado}</li>
-                            </ul>
-                        </p>
-                        <a href="#" class="btn btn-success">Contactar</a>
-                    </div>
-                </div> `
-    }
+// function que pone en el innerHTML los autos que correspondan. Hago esta function para evitar lineas de código más abajo
+const llenaDiv = (stockMarca, stockModelo, stockAño, stockPrecio, stockEstado) => {
+    cardsAutos.innerHTML += `
+            <div class="card" style="width: 18rem; display: inline-block">
+                <div class="card-body">
+                    <h5 class="card-title"> ${stockMarca} ${stockModelo}</h5>
+                    <p class="card-text">
+                        <ul>
+                            <li>Año: ${stockAño}</li>
+                            <li>Precio: ${stockPrecio}</li>
+                            <li>Estado: ${stockEstado}</li>
+                        </ul>
+                    </p>
+                    <a href="#" class="btn btn-success">Contactar</a>
+                </div>
+            </div> `
+}
 
 // Eventos
-
+    
     formFiltro.addEventListener('submit', (e) =>  {
         e.preventDefault();
-        
         
         let marca = document.getElementById('marca').value;
         let modelo = document.getElementById('modelo').value;
@@ -111,14 +110,11 @@ pushTotal(auto8);
         let precioMax = document.getElementById('precioMax').value;
         let ceroKm = document.querySelector('input[name="respuesta"]:checked').value;
 
-        
         let autoNuevo = new AutoPorForm(marca, modelo, fabricacion, precioMin, precioMax, ceroKm);
 
         cardsAutos.innerHTML = ''; // para que el innerHTML se reinicie cada vez que hacemos un submit
 
         
-        
-
         /* A continuación hay algunos condicionales pensados para la posibilidad de que el usuario no complete todos los campos en el formulario.
         Otra alternativa era poner todos los inputs como 'required', pero quise imitar el funcionamiento de los filtradores de la vida real -por 
         así decirlo- que no le requieren al usuario llenar todos y cada uno de los campos */
@@ -129,9 +125,7 @@ pushTotal(auto8);
                 if (autoNuevo.marca === stockTotal[i].marca && autoNuevo.precioMin < stockTotal[i].precio && autoNuevo.precioMax > stockTotal[i].precio && autoNuevo.estado === stockTotal[i].estado) {
                 llenaDiv(stockTotal[i].marca, stockTotal[i].modelo, stockTotal[i].año, stockTotal[i].precio, stockTotal[i].estado );
                 }
-            }
-            
-
+            } 
         }
 
         else if (!autoNuevo.modelo) /*Por si no ingresa ese dato en el formulario */ {
@@ -157,11 +151,7 @@ pushTotal(auto8);
                 }
             }
         }
-        
 
-    
-    
-    
     })
 
     mostrarStockTotal.addEventListener('click', () => {
@@ -172,29 +162,51 @@ pushTotal(auto8);
     })
 
     
-    /*evento: dark mode. No tengo ni la menor idea de por qué no está funcionando. Cuando reinicio el navegador se va el dark mode, pero el storage
-    queda intacto con los valores. Por lo tanto, no es un problema en cómo estoy usando el storage, si no en cómo se ejecuta el resto del código. 
-     Sospecho que el código en su redacción actual pide sí o sí un click en el botón para que suceda la funcionalidad buscada. Mañana trato de corregirlo.*/
-    localStorage.setItem('darkMode', 'off')
+    //evento Dark Mode. 
+
+    const modoOscuro = () => { 
+        let containerPpal = document.getElementById('containerPpal');
+        containerPpal.className = 'bg-dark';
+        let colForm = document.getElementById('colForm');
+        colForm.className = 'col-4 text-white';
+    
+    }
+
+    const modoLuz = () => {
+        containerPpal.className = '';
+        colForm.className = 'col-4';
+       
+    }
+
+    
+    if (localStorage.getItem('darkMode')) {
+        modoOscuro();
+    } 
+    else if (!localStorage.getItem('darkMode')) {
+        modoLuz()
+    }
+    
     
     darkMode.addEventListener('click', () => {
         if (!localStorage.getItem('darkMode')) {
+
             localStorage.setItem('darkMode', 'on');
+            
+            modoOscuro()
+        }
+        else if (localStorage.getItem('darkMode')) {
 
-            let containerPpal = document.getElementById('containerPpal');
-            containerPpal.className = 'bg-dark';
-            let colForm = document.getElementById('colForm');
-            colForm.className = 'col-4 text-white';
+            localStorage.removeItem('darkMode')
+            
+            modoLuz();
 
         }
-        else if (localStorage.getItem('darkMode', 'on')) {
-            localStorage.setItem('darkMode', ''); // resetea el valor de darkMode a una string vacía
-            containerPpal.className = '';
-            colForm.className = 'col-4';
+     }) 
+     // fin evento Dark Mode
 
+    
 
-        }
-     })
+     
 
     
 
@@ -231,7 +243,7 @@ pushTotal(auto8);
 
 
 
-
+// Código viejo a continuación. Por ahora no lo descarto por si alguna lógica me es de utilidad
 
 
 // //Función que se utilizará más abajo para filtrar autos según la marca
