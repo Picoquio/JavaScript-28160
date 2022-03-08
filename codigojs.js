@@ -172,26 +172,31 @@ pushTotal(auto8);
     })
 
     
-    //evento: dark mode
+    /*evento: dark mode. No tengo ni la menor idea de por qué no está funcionando. Cuando reinicio el navegador se va el dark mode, pero el storage
+    queda intacto con los valores. Por lo tanto, no es un problema en cómo estoy usando el storage, si no en cómo se ejecuta el resto del código. 
+     Sospecho que el código en su redacción actual pide sí o sí un click en el botón para que suceda la funcionalidad buscada. Mañana trato de corregirlo.*/
     localStorage.setItem('darkMode', 'off')
     
     darkMode.addEventListener('click', () => {
-        if (localStorage.getItem('darkMode', 'off')) {
+        if (!localStorage.getItem('darkMode')) {
+            localStorage.setItem('darkMode', 'on');
+
             let containerPpal = document.getElementById('containerPpal');
             containerPpal.className = 'bg-dark';
             let colForm = document.getElementById('colForm');
             colForm.className = 'col-4 text-white';
 
-        
-
-            localStorage.setItem('darkMode', 'on')
         }
-        // else {
-        //     localStorage.setItem('darkMode')
-            
-        // }
+        else if (localStorage.getItem('darkMode', 'on')) {
+            localStorage.setItem('darkMode', ''); // resetea el valor de darkMode a una string vacía
+            containerPpal.className = '';
+            colForm.className = 'col-4';
+
+
+        }
      })
 
+    
 
 
 
