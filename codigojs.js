@@ -78,6 +78,7 @@ pushTotal(auto8);
     const formFiltro = document.getElementById('filterForm');
     const cardsAutos = document.getElementById('cardsAutos')
     const mostrarStockTotal = document.getElementById('mostrarStockTotal');
+    const darkMode = document.getElementById('darkMode');
 
     // function que pone en el innerHTML los autos que correspondan. Hago esta function para evitar lineas de código más abajo
     const llenaDiv = (stockMarca, stockModelo, stockAño, stockPrecio, stockEstado) => {
@@ -99,7 +100,7 @@ pushTotal(auto8);
 
 // Eventos
 
-    formFiltro.addEventListener('submit', (e) => {
+    formFiltro.addEventListener('submit', (e) =>  {
         e.preventDefault();
         
         
@@ -169,6 +170,27 @@ pushTotal(auto8);
             llenaDiv(stockTotal[i].marca, stockTotal[i].modelo, stockTotal[i].año, stockTotal[i].precio, stockTotal[i].estado );  
         }
     })
+
+    
+    //evento: dark mode
+    localStorage.setItem('darkMode', 'off')
+    
+    darkMode.addEventListener('click', () => {
+        if (localStorage.getItem('darkMode', 'off')) {
+            let containerPpal = document.getElementById('containerPpal');
+            containerPpal.className = 'bg-dark';
+            let colForm = document.getElementById('colForm');
+            colForm.className = 'col-4 text-white';
+
+        
+
+            localStorage.setItem('darkMode', 'on')
+        }
+        // else {
+        //     localStorage.setItem('darkMode')
+            
+        // }
+     })
 
 
 
