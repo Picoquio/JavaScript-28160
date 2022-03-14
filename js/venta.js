@@ -1,5 +1,7 @@
 //Anclajes a DOM
 const formVenta = document.getElementById('formVenta')
+const buttonCarrito = document.getElementById('buttonCarrito')
+
 
 
 //Eventos
@@ -24,3 +26,13 @@ formVenta.addEventListener('submit', (e) => {
     })
     //formVenta.reset()
 })
+
+
+buttonCarrito.addEventListener('click', () => {
+    console.log('hola')
+    swal({
+      title: "Error", 
+      text: `Distinguido tutor: esta funcionalidad no se encuentra disponible todavía. Disculpe las molestias`, 
+      icon: "error"
+  })
+  })

@@ -80,6 +80,7 @@ pushTotal(auto8);
     const formFiltro = document.getElementById('filterForm');
     const cardsAutos = document.getElementById('cardsAutos')
     const mostrarStockTotal = document.getElementById('mostrarStockTotal');
+    const buttonCarrito = document.getElementById('buttonCarrito')
 
 // function que pone en el innerHTML los autos que correspondan. Hago esta function para evitar lineas de código más abajo
 const llenaDiv = (stockMarca, stockModelo, stockAño, stockPrecio, stockEstado) => {
@@ -166,6 +167,15 @@ const llenaDiv = (stockMarca, stockModelo, stockAño, stockPrecio, stockEstado) 
             llenaDiv(stockTotal[i].marca, stockTotal[i].modelo, stockTotal[i].año, stockTotal[i].precio, stockTotal[i].estado );  
         }
     })
+
+    buttonCarrito.addEventListener('click', () => {
+        console.log('hola')
+        swal({
+          title: "Error", 
+          text: `Distinguido tutor: esta funcionalidad no se encuentra disponible todavía. Disculpe las molestias`, 
+          icon: "error"
+      })
+      })
 
 
 

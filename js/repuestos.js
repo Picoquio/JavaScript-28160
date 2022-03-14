@@ -33,8 +33,8 @@ pushToArray(stockRepuestos, repuesto1, repuesto2, repuesto3, repuesto4, repuesto
 
 
 //anclaje a DOM
-const cardsRepuestos = document.getElementById('cardsRepuestos');
-const alCarrito = document.querySelectorAll('.alCarrito')
+const cardsRepuestos = document.getElementById('cardsRepuestos')
+const buttonCarrito = document.getElementById('buttonCarrito')
 
 for (let i = 0; i < stockRepuestos.length; i++) {
     cardsRepuestos.innerHTML += `
@@ -48,6 +48,8 @@ for (let i = 0; i < stockRepuestos.length; i++) {
      </div>
     ` 
 }
+
+// Eventos
 
 document.querySelectorAll('.alCarrito').forEach(item => {
     item.addEventListener('click', () => {
@@ -67,6 +69,15 @@ document.querySelectorAll('.alCarrito').forEach(item => {
         onClick: function(){} // Callback after click
       }).showToast();
     })
+  })
+
+  buttonCarrito.addEventListener('click', () => {
+    console.log('hola')
+    swal({
+      title: "Error", 
+      text: `Distinguido tutor: esta funcionalidad no se encuentra disponible todavía. Disculpe las molestias`, 
+      icon: "error"
+  })
   })
 
 
