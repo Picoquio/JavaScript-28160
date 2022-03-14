@@ -15,15 +15,15 @@ class Repuesto {
 }
 
 // creamos los repuestos
-const repuesto1 = new Repuesto('Pastillas de freno', 200, './media/1.jpg')
-const repuesto2 = new Repuesto('Bujías', 400, './media/bujias.jpg')
-const repuesto3 = new Repuesto('Neumático', 1200, './media/ruedas.jpg')
-const repuesto4 = new Repuesto('Bomba de nafta', 700, './media/bombaNafta.jpg')
-const repuesto5 = new Repuesto('Liquido refrigerante', 180, './media/refrigerante.jpg')
-const repuesto6 = new Repuesto('Liquido para transmisión', 180, './media/liquidoTransmision.jpg')
-const repuesto7 = new Repuesto('Aceite lubricante', 180, './media/aceite.jpg')
-const repuesto8 = new Repuesto('Espejo retrovisor', 200, './media/espejo.jpg')
-const repuesto9 = new Repuesto('Ópticas faro led', 500, './media/faros.jpg')
+const repuesto1 = new Repuesto('Pastillas de freno', 200, '../images/1.jpg')
+const repuesto2 = new Repuesto('Bujías', 400, '../images/bujias.jpg')
+const repuesto3 = new Repuesto('Neumático', 1200, '../images/ruedas.jpg')
+const repuesto4 = new Repuesto('Bomba de nafta', 700, '../images/bombaNafta.jpg')
+const repuesto5 = new Repuesto('Liquido refrigerante', 180, '../images/refrigerante.jpg')
+const repuesto6 = new Repuesto('Liquido para transmisión', 180, '../images/liquidoTransmision.jpg')
+const repuesto7 = new Repuesto('Aceite lubricante', 180, '../images/aceite.jpg')
+const repuesto8 = new Repuesto('Espejo retrovisor', 200, '../images/espejo.jpg')
+const repuesto9 = new Repuesto('Ópticas faro led', 500, '../images/faros.jpg')
 
 //Array donde iran los objetos "repuesto"
 const stockRepuestos = [];
@@ -60,7 +60,7 @@ document.querySelectorAll('.alCarrito').forEach(item => {
         destination: "https://github.com/apvarun/toastify-js",
         newWindow: true,
         close: true,
-        gravity: "top", // `top` or `bottom`
+        gravity: "bottom", // `top` or `bottom`
         position: "right", // `left`, `center` or `right`
         stopOnFocus: true, // Prevents dismissing of toast on hover
         style: {
