@@ -20,7 +20,7 @@
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Home
+                    <a class="nav-link" href="#">Home
                     <span class="visually-hidden">(current)</span>
                     </a>
                 </li>
@@ -31,7 +31,7 @@
                     <a class="nav-link" href="./repuestos.html">Repuestos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Vende tu auto</a>
+                    <a class="nav-link active" href="#">Vende tu auto </a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
@@ -44,7 +44,7 @@
                     </div>
                 </li>
                 </ul>
-                <button type="button" class="btn btn-primary" id="darkMode">Toggle Dark Mode</button>
+                <button type="button" class="btn btn-primary" id="darkMode">Ver carrito</button>
             </div>
             </div>
         </nav>
@@ -60,20 +60,20 @@
                 <form id="formVenta">
                     <div class="mb-3">
                         <label for="marca" class="form-label" >Marca</label>
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="marca" id="marca" class="form-control" required>
                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="modelo" class="form-label">Modelo</label>
-                        <input type="text" id="modelo" name="modelo" class="form-control">
+                        <input type="text" id="modelo" name="modelo" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label for="fabricacion" class="form-label">Año de fabricación</label>
-                        <input type="number" id="fabricacion" name="fabricacion" class="form-control" min="1990" max="2022">
+                        <input type="number" id="fabricacion" name="fabricacion" class="form-control" min="1990" max="2022" required>
                     </div>
                     <div class="mb-3"> 
-                        <label for="precioMin" class="form-label">Precio pretendido</label>
-                        <input type="number" id="precioMin" name="precioMin" class="form-control" required>
+                        <label for="precio" class="form-label">Precio pretendido</label>
+                        <input type="number" id="precio" name="precio" class="form-control" required>
                     </div>
                     <div class="mb-3" id="aver">
                         <p>¿Usado o 0km?</p>
