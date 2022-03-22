@@ -20,7 +20,7 @@ const repuesto2 = new Repuesto('Bujías', 400, '../images/bujias.jpg')
 const repuesto3 = new Repuesto('Neumático', 1200, '../images/ruedas.jpg')
 const repuesto4 = new Repuesto('Bomba de nafta', 700, '../images/bombaNafta.jpg')
 const repuesto5 = new Repuesto('Liquido refrigerante', 180, '../images/refrigerante.jpg')
-const repuesto6 = new Repuesto('Liquido para transmisión', 180, '../images/liquidoTransmision.jpg')
+const repuesto6 = new Repuesto('Liquido transmisión', 180, '../images/liquidoTransmision.jpg')
 const repuesto7 = new Repuesto('Aceite lubricante', 180, '../images/aceite.jpg')
 const repuesto8 = new Repuesto('Espejo retrovisor', 200, '../images/espejo.jpg')
 const repuesto9 = new Repuesto('Ópticas faro led', 500, '../images/faros.jpg')
@@ -38,13 +38,15 @@ const buttonCarrito = document.getElementById('buttonCarrito')
 
 for (let i = 0; i < stockRepuestos.length; i++) {
     cardsRepuestos.innerHTML += `
-    <div class="card" style="width: 18rem; display: inline-block"">
+    <div class ="col">
+    <div class="card mb-4 shadow-sm p-3 mb-5 bg-body rounded" style="width: 18rem; display: inline-block;">
         <img class="card-img-top" src="${stockRepuestos[i].imagen}" alt="Card image cap">
         <div class="card-body">
-            <h5 class="card-title">${stockRepuestos[i].nombre}</h5>
+            <h5 class="card-title" style="font-size:0.85vw">${stockRepuestos[i].nombre}</h5>
             <p class="card-text">Precio: ${stockRepuestos[i].precio}</p>
-            <a class="btn btn-primary alCarrito">Agregar al carrito</a>
+            <a class="btn btn-primary d-flex justify-content-center alCarrito">Agregar al carrito</a>
         </div>
+     </div>
      </div>
     ` 
 }

@@ -86,7 +86,8 @@ pushTotal(auto8);
 // function que pone en el innerHTML los autos que correspondan. Hago esta function para evitar lineas de código más abajo
 const llenaDiv = (stockMarca, stockModelo, stockAño, stockPrecio, stockEstado) => {
     cardsAutos.innerHTML += `
-            <div class="card" style="width: 18rem; display: inline-block">
+            <div class="col">
+            <div class="card mb-4 shadow-sm p-3 mb-5 bg-body rounded" style="width: 18rem; display: inline-block; max-width: 75%">
                 <div class="card-body">
                     <h5 class="card-title"> ${stockMarca} ${stockModelo}</h5>
                     <p class="card-text">
@@ -98,6 +99,7 @@ const llenaDiv = (stockMarca, stockModelo, stockAño, stockPrecio, stockEstado) 
                     </p>
                     <a href="#" class="btn btn-success">Contactar</a>
                 </div>
+            </div>
             </div> `
 }
 

@@ -13,9 +13,7 @@
 <!-- Navbar genérico y provisorio -->
    
   
-  
-    <div class="container">
-     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
         <div class="container-fluid">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,23 +38,22 @@
             </li>
             </ul>
             <button type="button" class="btn btn-primary" id="buttonCarrito">Ver carrito</button>
-            <button type="button" class="btn btn-primary" id="buttonCarrito">Ver carrito</button>
         </div>
         </div>
     </nav>
+    <div class="container " style="background-color: rgb(240, 253, 253);">
+     
 
-    <div class="overflow-hidden" style="height: 1.875rem;">
-        <div class="row" >
+    <div class="overflow-hidden " style="height: 2.5rem;">
+        <div class="row ">
             <div class="col-10"></div>
             <div class="col-2 text-center " style="background-color: rgb(237, 227, 227);" id="clima">
-                <!-- <p class="text-end">ssda</p> -->
-                <!-- <img src="http://openweathermap.org/img/wn/10d@2x.png" class="rounded float-end" style="max-width: 50%; height: 40%;" alt=""> -->
             </div>
         </div> 
     </div>    
         <div class="row pt-4">
             <div class="col-4"> 
-                <form id="filterForm">
+                <form class="shadow p-3 mb-5 bg-body rounded sticky-top" id="filterForm">
                     <div class="mb-3">
                         <label for="marca" class="form-label" >Marca</label>
                         <select id="marca" name="marca" class="form-control">
@@ -93,7 +90,9 @@
                     <button type="button" class="btn btn-primary" id="mostrarStockTotal">Ver stock total</button>
                  </form>
             </div>
-            <div class="col-8" id="cardsAutos">
+            <div class="col-8">
+            <div class="row row-cols-3" id="cardsAutos">
+            </div>
 
             </div>
         </div>

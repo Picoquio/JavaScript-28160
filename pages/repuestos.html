@@ -9,8 +9,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Navbar genérico y provisorio -->
+    <!-- Navbar genérico y provisorio -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container-fluid">
             <a class="navbar-brand" href="#">Navbar</a>
@@ -40,23 +39,28 @@
             </div>
             </div>
         </nav>
-        <div class="overflow-hidden" style="height: 1.875rem;">
-            <div class="row" >
+    <div class="container" style="background-color: rgb(240, 253, 253);">
+        
+        
+        <!-- Clima en vivo -->
+        <div class="overflow-hidden " style="height: 2.5rem;">
+            <div class="row " >
                 <div class="col-10"></div>
-                <div class="col-2 text-center " style="background-color: rgb(237, 227, 227);" id="clima">
-                    <!-- <p class="text-end">ssda</p> -->
-                    <!-- <img src="http://openweathermap.org/img/wn/10d@2x.png" class="rounded float-end" style="max-width: 50%; height: 40%;" alt=""> -->
+                <div class="col-2 text-center  " style="background-color: rgb(237, 227, 227);" id="clima">
                 </div>
             </div> 
-        </div>    
+        </div>  
+        
+        <!--Título "repuestos"-->
         <div class="row pt-4">
             <h1>Repuestos</h1>
         </div>
-        <div class="row pt-4">
-            <div class="col" id="cardsRepuestos">
 
+        <!-- Acá van las cards de los repuestos -->
+        <!-- <div class="row pt-4 "> -->
+            <div class="row row-cols-auto d-flex justify-content-center" id="cardsRepuestos">
             </div>
-        </div>
+        <!-- </div> -->
 
 
 
