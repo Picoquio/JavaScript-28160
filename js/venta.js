@@ -71,13 +71,13 @@ buttonCarrito.addEventListener('click', () => {
     else if (data.weather[0].description === 'mist' || data.weather[0].description === 'Smoke' || data.weather[0].description === 'Haze' || data.weather[0].description === 'sand/ dust whirls' || data.weather[0].description === 'fog' || data.weather[0].description === 'sand' || data.weather[0].description === 'dust' || data.weather[0].description === 'volcanic ash' || data.weather[0].description === 'squalls' || data.weather[0].description === 'tornado') {
         idUrl = '50'
     }
-    else if (data.weather[0].description === 'few clouds: 11-25%') {
+    else if (data.weather[0].description === 'few clouds') {
         idUrl = '02'
     }
-    else if (data.weather[0].description === 'scattered clouds: 25-50%') {
+    else if (data.weather[0].description === 'scattered clouds') {
         idUrl = '03'
     }
-    else if (data.weather[0].description === 'broken clouds: 51-84%' || data.weather[0].description === 'overcast clouds: 85-100%') {
+    else if (data.weather[0].description === 'broken clouds' || data.weather[0].description === 'overcast clouds') {
         idUrl = '04'
     }
 

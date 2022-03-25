@@ -9,49 +9,76 @@
 
 </head>
 <body>
-    
-<!-- Navbar genérico y provisorio -->
-   
-  
+
+  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
         <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav me-auto">
-            <!-- <li class="nav-item">
-                <a class="nav-link active" href="#">Home
-                <span class="visually-hidden">(current)</span>
-                </a>
-            </li> -->
-            <li class="nav-item">
-                <a class="nav-link active" href="#">Stock</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="./pages/repuestos.html">Repuestos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="./pages/vende.html" id="vende">Vende tu auto</a>
-            </li>
-            </ul>
-            <button type="button" class="btn btn-primary" id="buttonCarrito">Ver carrito</button>
-        </div>
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Stock</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./pages/repuestos.html">Repuestos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./pages/vende.html" id="vende">Vende tu auto</a>
+                </li>
+                </ul>
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                    Ver carrito
+                </button>
+            </div>
         </div>
     </nav>
-    <div class="container " style="background-color: rgb(240, 253, 253);">
-     
 
-    <div class="overflow-hidden " style="height: 2.5rem;">
-        <div class="row ">
-            <div class="col-10"></div>
-            <div class="col-2 text-center " style="background-color: rgb(237, 227, 227);" id="clima">
+    <!-- Código del offcanvas -->
+    <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+
+        <!-- Header e imagen del carrito -->
+        <div class="bg-dark bg-gradient pb-3">
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-        </div> 
-    </div>    
+            <div class="text-center">
+                <img src="/images/carrito-de-compras2.png" class="img-fluid rounded-circle rounded bg-white" alt="">
+            </div>
+        </div>
+
+        <!-- body del offcanvas -->
+        <div class="offcanvas-body bg-dark text-white ">
+            <div>
+                <h5 class="text-white text-center">Mi carrito</h6>
+            </div>
+            <hr>
+        
+        
+        
+        </div>
+        
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="container " style="background-color: rgb(240, 253, 253);">
+        
+        <!-- Acá va el clima, conectado a una API -->
+        <div class="overflow-hidden " style="height: 2.5rem;">
+            <div class="row ">
+                <div class="col-10"></div>
+                <div class="col-2 text-center " style="background-color: rgb(237, 227, 227);" id="clima">
+                </div>
+            </div> 
+        </div>
+
+        <!-- Contenedor del Form y los autos -->
         <div class="row pt-4">
+
+            <!-- Acá va el form -->
             <div class="col-4"> 
                 <form class="shadow p-3 mb-5 bg-body rounded sticky-top" id="filterForm">
                     <div class="mb-3">
@@ -90,13 +117,13 @@
                     <button type="button" class="btn btn-primary" id="mostrarStockTotal">Ver stock total</button>
                  </form>
             </div>
-            <div class="col-8">
-            <div class="row row-cols-3" id="cardsAutos">
-            </div>
 
+            <!-- Acá se cargan los autos (vía manipulación del DOM) -->
+            <div class="col-8">
+                <div class="row row-cols-3" id="cardsAutos">
+                </div>
             </div>
-        </div>
-        
+        </div> 
     </div>
     
 
