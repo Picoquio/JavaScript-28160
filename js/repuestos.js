@@ -7,23 +7,24 @@ const pushToArray = (array, ...objetos) => {
 
 //Self-explanatory
 class Repuesto {
-    constructor(nombre, precio, imagen) {
+    constructor(nombre, precio, imagen, imagenChica) {
         this.nombre = nombre;
         this.precio = precio;
         this.imagen = imagen;
+        this.imagenChica = imagenChica;
     }
 }
 
 // creamos los repuestos
-const repuesto1 = new Repuesto('Pastillas de freno', 200, '../images/1.jpg')
-const repuesto2 = new Repuesto('Bujías', 400, '../images/bujias.jpg')
-const repuesto3 = new Repuesto('Neumático', 1200, '../images/ruedas.jpg')
-const repuesto4 = new Repuesto('Bomba de nafta', 700, '../images/bombaNafta.jpg')
-const repuesto5 = new Repuesto('Liquido refrigerante', 180, '../images/refrigerante.jpg')
-const repuesto6 = new Repuesto('Liquido transmisión', 180, '../images/liquidoTransmision.jpg')
-const repuesto7 = new Repuesto('Aceite lubricante', 180, '../images/aceite.jpg')
-const repuesto8 = new Repuesto('Espejo retrovisor', 200, '../images/espejo.jpg')
-const repuesto9 = new Repuesto('Ópticas faro led', 500, '../images/faros.jpg')
+const repuesto1 = new Repuesto('Pastillas de freno', 200, '../images/1.jpg', '../images/1c.jpg')
+const repuesto2 = new Repuesto('Bujías', 400, '../images/bujias.jpg', '../images/bujiasc.jpg')
+const repuesto3 = new Repuesto('Neumático', 1200, '../images/ruedas.jpg', '../images/ruedasc.jpg')
+const repuesto4 = new Repuesto('Bomba de nafta', 700, '../images/bombaNafta.jpg', '../images/bombaNaftac.jpg')
+const repuesto5 = new Repuesto('Liquido refrigerante', 180, '../images/refrigerante.jpg', '../images/refrigerantec.jpg')
+const repuesto6 = new Repuesto('Liquido transmisión', 180, '../images/liquidoTransmision.jpg', '../images/liquidoTransmisionc.jpg')
+const repuesto7 = new Repuesto('Aceite lubricante', 180, '../images/aceite.jpg', '../images/aceitec.jpg')
+const repuesto8 = new Repuesto('Espejo retrovisor', 200, '../images/espejo.jpg', '../images/espejoc.jpg')
+const repuesto9 = new Repuesto('Ópticas faro led', 500, '../images/faros.jpg', '../images/farosc.jpg')
 
 //Array donde iran los objetos "repuesto"
 const stockRepuestos = [];
@@ -79,19 +80,56 @@ document.querySelectorAll('.alCarrito').forEach(item => {
 for (let i = 0; i < stockRepuestos.length; i++) {
     if (JSON.parse(localStorage.getItem(`repuesto${i}`))) {
         let getStorage = JSON.parse(localStorage.getItem(`repuesto${i}`))
+        let idEliminar = `a${i}` // id dinamicos para el botón que elimina del carrito
+        let idCard = `b${i}` // id's dinámicos para el div que contiene la carta
         itemsCarrito.innerHTML += `
-            <div class ="col">
-            <div class="card mb-4 shadow-sm p-3 mb-5 bg-body rounded" style="width: 18rem; display: inline-block;">
-                <img class="card-img-top" src="${getStorage.imagen}" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title" style="font-size:0.85vw">${getStorage.nombre}</h5>
-                    <p class="card-text">Precio: ${getStorage.precio}</p>
-                    <a class="btn btn-primary d-flex justify-content-center alCarrito" id="${i}">Agregar al carrito</a>
+        <div class="card mb-4 shadow-sm p-3 mb-5 rounded" id="${idCard}">
+            <div class="row">
+                <div class="col-5 d-flex justify-content-center" >
+                    <img class="card-img-left pb-2" src="${getStorage.imagenChica}" alt="Card image cap">
                 </div>
-             </div>
-             </div>`
+                <div class="col">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark">${getStorage.nombre}</h5>
+                        <p class="card-text text-dark">Precio: $${getStorage.precio}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row " >
+                <div class="col-5 d-flex justify-content-center">
+                    <button class="btn btn-secondary btn-sm eliminar" id="${idEliminar}"type="submit">Eliminar</button>
+                </div>
+                <div class="col ">
+                    <div class="btn-group-bg" style="margin-left: 16px;" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-primary">-</button>
+                        <button type="button" class="btn btn-primary">1</button>
+                        <button type="button" class="btn btn-primary">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            `
+
+    document.addEventListener('click', function(e){
+        if(e.target && e.target.id== idEliminar){
+            document.getElementById(idCard).style.display = "none";  
+        }
+    });
+    document.addEventListener('click', function(e){
+        if(e.target && e.target.id== idEliminar){
+            localStorage.removeItem(`repuesto${i}`) 
+        }
+    });
+        
     }
 }
+
+document.addEventListener('click', function(e){
+    if(e.target && e.target.id== 'myDynamicallyAddedElementID'){
+         console.log('pelotudo')
+    }
+});
+
 
 // Manda los items al local storage
 for (let i = 0; i < stockRepuestos.length; i++) {
@@ -106,8 +144,8 @@ for (let i = 0; i < stockRepuestos.length; i++) {
         let getStorage = JSON.parse(localStorage.getItem(`repuesto${i}`))
         itemsCarrito.innerHTML += `
             <div class ="col">
-            <div class="card mb-4 shadow-sm p-3 mb-5 bg-body rounded" style="width: 18rem; display: inline-block;">
-                <img class="card-img-top" src="${getStorage.imagen}" alt="Card image cap">
+            <div class="card mb-4 shadow-sm p-3 mb-5 bg-secondary rounded" style="width: 18rem; display: inline-block;">
+                <img class="card-img-left" src="${getStorage.imagen}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title" style="font-size:0.85vw">${getStorage.nombre}</h5>
                     <p class="card-text">Precio: ${getStorage.precio}</p>
