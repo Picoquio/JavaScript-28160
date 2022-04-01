@@ -62,12 +62,53 @@ for (let i = 0; i < stockRepuestos.length; i++) {
 // En el locaStorage habrá un array que contiene los productos en forma de objetos
 const arrayStorage = [];
 
+
+// carga items del carrito si se encuentran en el localStorage
+if (localStorage.getItem('Array de repuestos')) {
+    let getStorage = JSON.parse(localStorage.getItem(`Array de repuestos`))
+
+        itemsCarrito.innerHTML = '';
+        getStorage.forEach((item) => {
+            itemsCarrito.innerHTML += `
+                <div class="card mb-4 shadow-sm p-3 mb-5 rounded" id="${item.id}">
+                   <div class="row">
+                       <div class="col-5 d-flex justify-content-center" >
+                           <img class="card-img-left pb-2" src="${item.imagenChica}" alt="Card image cap">
+                       </div>
+                       <div class="col">
+                           <div class="card-body">
+                               <h5 class="card-title text-dark">${item.nombre}</h5>
+                               <p class="card-text text-dark">Precio: $${item.precio}</p>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="row " >
+                       <div class="col-5 d-flex justify-content-center">
+                           <button class="eliminar btn btn-secondary btn-sm " id="${item.id + 'a'}"type="submit">Eliminar</button>
+                       </div>
+                       <div class="col ">
+                           <div class="btn-group-bg" style="margin-left: 16px;" role="group" aria-label="Basic example">
+                               <button type="button" class="btn btn-primary" id="">-</button>
+                               <button type="button" class="btn btn-primary">${item.cantidad}</button>
+                               <button type="button" class="btn btn-primary" id="">+</button>
+                           </div>
+                       </div>
+                   </div>
+                </div>
+                   `
+        })
+
+}
+
+
+// Agrega items al carrito (y más funcionalidades -ver comentarios-)
 document.querySelectorAll('.alCarrito').forEach(item => {
     item.addEventListener('click', (e) => {
 
         // Para no agregar dos veces el producto al carrito -----------------------------------------------------------------
         const check = arrayStorage.some((x) => x.id == e.target.id) // el .some nos devuelve true si el item ya se encuentra en el carrito (arrayStorage)
         // ¿e.target.id? chequea si el id del objeto es el mismo que el id del botón "aregar al carrito"
+    
         if (check) {
             Toastify({
                 text: "El producto ya está en el carrito 🤦‍♂️",
@@ -145,36 +186,18 @@ document.querySelectorAll('.alCarrito').forEach(item => {
     //remueve el producto del innerhtml del carrito
     document.addEventListener('click', function (e) {
         if (e.target && e.target.id == `${item.id + 'a'}`) {
-            document.getElementById(`${item.id}`).style.display = "none";
-        }
-    });
-    //remueve el producto del localstorage
-    document.addEventListener('click', function (e) {
-        if (e.target && e.target.id == `${item.id + 'a'}`) {
-        
+            document.getElementById(`${item.id}`).style.display = "none"; // remueve el producto del innerhtml del carrito
 
+            // de acá para bajo removemos el producto del local storage y del array 
             let arrayAModificar = JSON.parse(localStorage.getItem('Array de repuestos'));
-            
 
-            // console.log(arrayAModificar[0].id) 
-            // console.log(e.target.id)
-
-            // for (let i = 0; i < arrayAModificar.length; i++) {
-            //     arrayAModificar[i].id += 'a'
-                
-            // }
-            
             for (let i = 0; i < arrayAModificar.length; i++) {
                 if (`${arrayAModificar[i].id + 'a'}` == e.target.id) {
                     arrayAModificar.splice(i,1)
+                    arrayStorage.splice(i,1)
                 }
             }
-            console.log('Array modificado')
-            console.log(arrayAModificar)
-
             localStorage.setItem('Array de repuestos', JSON.stringify(arrayAModificar))
-
-
         }
     });
 })

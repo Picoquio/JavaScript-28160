@@ -1,6 +1,6 @@
 //Anclajes a DOM
 const formVenta = document.getElementById('formVenta')
-const buttonCarrito = document.getElementById('buttonCarrito')
+
 
 
 
@@ -27,15 +27,6 @@ formVenta.addEventListener('submit', (e) => {
     //formVenta.reset()
 })
 
-
-buttonCarrito.addEventListener('click', () => {
-    console.log('hola')
-    swal({
-      title: "Error", 
-      text: `Distinguido tutor: esta funcionalidad no se encuentra disponible todavía. Disculpe las molestias`, 
-      icon: "error"
-  })
-  })
 
    // función que sirve para cambiar el icono del clima
    const callbackFetch = (data) => {
@@ -90,3 +81,58 @@ buttonCarrito.addEventListener('click', () => {
   fetch('https://api.openweathermap.org/data/2.5/weather?lat=-34.6&lon=-58.45&appid=60487b36d1b98aba11d57dc39f976eab&units=metric ')
   .then(response => response.json())
   .then(callbackFetch)
+
+
+
+   // carga items del carrito si se encuentran en el localStorage (y más funcionalidad, ver más abajo)
+   if (localStorage.getItem('Array de repuestos')) {
+    let getStorage = JSON.parse(localStorage.getItem(`Array de repuestos`))
+
+        itemsCarrito.innerHTML = '';
+        getStorage.forEach((item) => {
+            itemsCarrito.innerHTML += `
+                <div class="card mb-4 shadow-sm p-3 mb-5 rounded" id="${item.id}">
+                <div class="row">
+                    <div class="col-5 d-flex justify-content-center" >
+                        <img class="card-img-left pb-2" src="${item.imagenChica}" alt="Card image cap">
+                    </div>
+                    <div class="col">
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">${item.nombre}</h5>
+                            <p class="card-text text-dark">Precio: $${item.precio}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row " >
+                    <div class="col-5 d-flex justify-content-center">
+                        <button class="eliminar btn btn-secondary btn-sm " id="${item.id + 'a'}"type="submit">Eliminar</button>
+                    </div>
+                    <div class="col ">
+                        <div class="btn-group-bg" style="margin-left: 16px;" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-primary" id="">-</button>
+                            <button type="button" class="btn btn-primary">${item.cantidad}</button>
+                            <button type="button" class="btn btn-primary" id="">+</button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                `
+
+            //mediante un click en el botón "eliminar" el usuario elimina el producto tanto del innerhtml del carrito como del localStorage
+            document.addEventListener('click', function (e) {
+                if (e.target && e.target.id == `${item.id + 'a'}`) {
+                    document.getElementById(`${item.id}`).style.display = "none"; // elimina el innerthml del item en el carrito
+
+                    //de acá para abajo eliminamos el producto del local storage
+                    let arrayAModificar = JSON.parse(localStorage.getItem('Array de repuestos'));
+        
+                    for (let i = 0; i < arrayAModificar.length; i++) {
+                        if (`${arrayAModificar[i].id + 'a'}` == e.target.id) {
+                            arrayAModificar.splice(i,1)
+                        }
+                    }
+                    localStorage.setItem('Array de repuestos', JSON.stringify(arrayAModificar))
+                }
+            });
+        })
+}

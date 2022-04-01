@@ -236,137 +236,60 @@ const llenaDiv = (stockMarca, stockModelo, stockAño, stockPrecio, stockEstado) 
 
 
 
-
-
     
-
-     
-
     
+  
 
+    // carga items del carrito si se encuentran en el localStorage (y más funcionalidad, ver más abajo)
+    if (localStorage.getItem('Array de repuestos')) {
+        let getStorage = JSON.parse(localStorage.getItem(`Array de repuestos`))
 
+            itemsCarrito.innerHTML = '';
+            getStorage.forEach((item) => {
+                itemsCarrito.innerHTML += `
+                    <div class="card mb-4 shadow-sm p-3 mb-5 rounded" id="${item.id}">
+                    <div class="row">
+                        <div class="col-5 d-flex justify-content-center" >
+                            <img class="card-img-left pb-2" src="${item.imagenChica}" alt="Card image cap">
+                        </div>
+                        <div class="col">
+                            <div class="card-body">
+                                <h5 class="card-title text-dark">${item.nombre}</h5>
+                                <p class="card-text text-dark">Precio: $${item.precio}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row " >
+                        <div class="col-5 d-flex justify-content-center">
+                            <button class="eliminar btn btn-secondary btn-sm " id="${item.id + 'a'}"type="submit">Eliminar</button>
+                        </div>
+                        <div class="col ">
+                            <div class="btn-group-bg" style="margin-left: 16px;" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-primary" id="">-</button>
+                                <button type="button" class="btn btn-primary">${item.cantidad}</button>
+                                <button type="button" class="btn btn-primary" id="">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    `
 
+                //mediante un click en el botón "eliminar" el usuario elimina el producto tanto del innerhtml del carrito como del localStorage
+                document.addEventListener('click', function (e) {
+                    if (e.target && e.target.id == `${item.id + 'a'}`) {
+                        document.getElementById(`${item.id}`).style.display = "none"; // elimina el innerthml del item en el carrito
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Código viejo a continuación. Por ahora no lo descarto por si alguna lógica me es de utilidad
-
-
-// //Función que se utilizará más abajo para filtrar autos según la marca
-// const filtroPorMarca = (Marca) => {
-//     /* el parámetro "Marca" sirve para indicarle al código qué value filtrar en los objetos del array "stockTotal". Ver más arriba en la instanciación de los autos 
-//     cómo escribir los nombres de las marcas. P.ej.: 'Honda', 'Ford', etc. */
-//         nuevoArray = stockTotal.filter( objeto => {
-//         return objeto.marca === Marca
-//     })
-
-//     let numeracion= 1;  //Para que en el console.log del for siguiente aparezcan los autos de manera enumerada.
-//     for (let i = 0; i < nuevoArray.length; i++) {
-//         if (i <= 0) {
-
-//             let crear1 = document.createElement('p');
-//             crear1.innerHTML =  `<h2>A continuación, los vehículos marca ${Marca}:</h2>`
-//             document.body.appendChild(crear1);
-//             // console.log(`A continuación, los vehículos marca ${Marca} en nuestro stock`)
-//         }
-        
-//         let crear2 = document.createElement('p');
-//         crear2.innerHTML = `${numeracion}. Modelo: ${nuevoArray[i].modelo}. Estado: ${nuevoArray[i].estado} Año: ${nuevoArray[i].año}. Precio: ${nuevoArray[i].precio}`;
-//         document.body.appendChild(crear2);
-//         // console.log(`${numeracion}. Modelo: ${nuevoArray[i].modelo}. Estado: ${nuevoArray[i].estado} Año: ${nuevoArray[i].año}. Precio: ${nuevoArray[i].precio}`)
-//         numeracion += 1;
-//     }
-// }
-
-// //pedimos input al usuario
-// const promptPpal = prompt('Ingrese 1 para ofrecernos su auto. Ingrese 2 para consultar por nuestro stock de vehículos')
-
-// if (promptPpal === '1') {
-//     const userPrompt = new NuevoAutoUsado (
-//         prompt('Ingrese la marca de su automóvil'),
-//         prompt('Ingrese el modelo de su automóvil'),
-//         parseInt(prompt('Ingrese el año de fabricación')),
-//         parseInt(prompt('Ingrese el precio que pretende recibir'))
-//     )
-//     let buscaId = document.getElementById('uno');
-//     buscaId.innerHTML = `Nos ha ofrecido un ${userPrompt.marca} modelo ${userPrompt.modelo}, del año ${userPrompt.año} por un precio de ${userPrompt.precio}. En breve lo contactaremos, muchas gracias.`
-//     //alert(`Nos ha ofrecido un ${userPrompt.marca} modelo ${userPrompt.modelo}, del año ${userPrompt.año} por un precio de ${userPrompt.precio}. En breve lo contactaremos, muchas gracias.`)
-// }
-
-// else if (promptPpal === '2') {
-//     const propmtStock = prompt('Ingrese 1 para ver nuestro stock total de vehículos. Ingrese 2 para ver el stock de vehículos HONDA. Ingrese 3 para ver el stock de vehículos FORD. Ingrese 4 para ver el stock de vehículos TOYOTA.')
-
-//     if (propmtStock === '1') {
-//         let numeracion= 1;  //Para que en el console.log del for siguiente aparezcan los autos de manera enumerada.
-
-//         for (let i = 0; i < stockTotal.length; i++) {
-//             if (i <= 0) {
-//                 let crear1 = document.createElement('p');
-//                 crear1.innerHTML = '<h2>A continuación, el stock total de automóviles:</h2>'
-//                 document.body.appendChild(crear1);
-        
-//                // console.log('A continuación, el stock total de autos')
-//             }
+                        //de acá para abajo eliminamos el producto del local storage
+                        let arrayAModificar = JSON.parse(localStorage.getItem('Array de repuestos'));
             
-//             let crear2 = document.createElement('p');
-//             crear2.innerHTML = `${numeracion}. Marca: ${stockTotal[i].marca}. Modelo: ${stockTotal[i].modelo}. Estado: ${stockTotal[i].estado} Año: ${stockTotal[i].año}. Precio: ${stockTotal[i].precio}`;
-//             document.body.appendChild(crear2);
-//            // console.log(`${numeracion}. Marca: ${stockTotal[i].marca}. Modelo: ${stockTotal[i].modelo}. Estado: ${stockTotal[i].estado} Año: ${stockTotal[i].año}. Precio: ${stockTotal[i].precio}`)
-//             numeracion += 1;
-//         }
-//     }
-
-//     else if (propmtStock === '2') {
-//         filtroPorMarca('Honda')
-//     }
-    
-
-//     else if (propmtStock === '3') {
-//         filtroPorMarca('Ford')  
-//     }
-
-   
-//     else if (propmtStock === '4') {
-//         filtroPorMarca('Toyota')
-//     };
-// }
- 
-
-
-
-
-
-
-
-
-
-
+                        for (let i = 0; i < arrayAModificar.length; i++) {
+                            if (`${arrayAModificar[i].id + 'a'}` == e.target.id) {
+                                arrayAModificar.splice(i,1)
+                            }
+                        }
+                        localStorage.setItem('Array de repuestos', JSON.stringify(arrayAModificar))
+                    }
+                });
+            })
+    }
 

@@ -37,31 +37,35 @@
         </div>
     </nav>
 
-    <!-- Código del offcanvas -->
-    <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+   <!-- Código del offcanvas -->
+   <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasExample"
+   aria-labelledby="offcanvasExampleLabel">
 
-        <!-- Header e imagen del carrito -->
-        <div class="bg-dark bg-gradient pb-3">
-            <div class="d-flex justify-content-end">
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="text-center">
-                <img src="/images/carrito-de-compras2.png" class="img-fluid rounded-circle rounded bg-white" alt="">
-            </div>
-        </div>
+   <!-- Header e imagen del carrito -->
+   <div class="bg-primary bg-gradient pb-3">
+       <div class="d-flex justify-content-end">
+           <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+               aria-label="Close"></button>
+       </div>
+       <div class="text-center">
+           <img src="../images/carrito-de-compras2.png" class="img-fluid rounded-circle rounded bg-white" alt="">
+       </div>
+   </div>
 
-        <!-- body del offcanvas -->
-        <div class="offcanvas-body bg-dark text-white ">
-            <div>
-                <h5 class="text-white text-center">Mi carrito</h6>
-            </div>
-            <hr>
-        
-        
-        
-        </div>
-        
-    </div>
+   <!-- body del offcanvas -->
+   <div class="offcanvas-body bg-primary text-white">
+       <div>
+           <h5 class="text-white text-center">Mi carrito</h6>
+       </div>
+       <hr>
+       <!-- Acá van los items del carrito (vía manipulación del DOM)-->
+       <div class="" id="itemsCarrito"></div>
+       <div class="footerCarrito">
+           
+       </div>
+   </div>
+
+</div>
 
     <!-- Contenedor principal -->
     <div class="container " style="background-color: rgb(240, 253, 253);">
