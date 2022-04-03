@@ -7,26 +7,27 @@ const pushToArray = (array, ...objetos) => {
 
 //Self-explanatory
 class Repuesto {
-    constructor(nombre, precio, imagen, imagenChica, id, cantidad) {
+    constructor(nombre, precio, imagen, imagenChica, id, cantidad, precioReferencia) {
         this.nombre = nombre;
         this.precio = precio;
         this.imagen = imagen;
         this.imagenChica = imagenChica;
         this.id = id;
         this.cantidad = cantidad;
+        this.precioReferencia = precioReferencia;
     }
 }
 
 // creamos los repuestos
-const repuesto1 = new Repuesto('Pastillas de freno', 200, '../images/1.jpg', '../images/1c.jpg', 0, 1)
-const repuesto2 = new Repuesto('Bujías', 400, '../images/bujias.jpg', '../images/bujiasc.jpg', 1, 1)
-const repuesto3 = new Repuesto('Neumático', 1200, '../images/ruedas.jpg', '../images/ruedasc.jpg', 2, 1)
-const repuesto4 = new Repuesto('Bomba de nafta', 700, '../images/bombaNafta.jpg', '../images/bombaNaftac.jpg', 3, 1)
-const repuesto5 = new Repuesto('Liquido refrigerante', 180, '../images/refrigerante.jpg', '../images/refrigerantec.jpg', 4, 1)
-const repuesto6 = new Repuesto('Liquido transmisión', 180, '../images/liquidoTransmision.jpg', '../images/liquidoTransmisionc.jpg', 5, 1)
-const repuesto7 = new Repuesto('Aceite lubricante', 180, '../images/aceite.jpg', '../images/aceitec.jpg', 6, 1)
-const repuesto8 = new Repuesto('Espejo retrovisor', 200, '../images/espejo.jpg', '../images/espejoc.jpg', 7, 1)
-const repuesto9 = new Repuesto('Ópticas faro led', 500, '../images/faros.jpg', '../images/farosc.jpg', 8, 1)
+const repuesto1 = new Repuesto('Pastillas de freno', 200, '../images/1.jpg', '../images/1c.jpg', 0, 1, 200)
+const repuesto2 = new Repuesto('Bujías', 400, '../images/bujias.jpg', '../images/bujiasc.jpg', 1, 1, 400)
+const repuesto3 = new Repuesto('Neumático', 1200, '../images/ruedas.jpg', '../images/ruedasc.jpg', 2, 1, 1200)
+const repuesto4 = new Repuesto('Bomba de nafta', 700, '../images/bombaNafta.jpg', '../images/bombaNaftac.jpg', 3, 1, 700)
+const repuesto5 = new Repuesto('Liquido refrigerante', 180, '../images/refrigerante.jpg', '../images/refrigerantec.jpg', 4, 1, 180)
+const repuesto6 = new Repuesto('Liquido transmisión', 180, '../images/liquidoTransmision.jpg', '../images/liquidoTransmisionc.jpg', 5, 1, 180)
+const repuesto7 = new Repuesto('Aceite lubricante', 180, '../images/aceite.jpg', '../images/aceitec.jpg', 6, 1, 180)
+const repuesto8 = new Repuesto('Espejo retrovisor', 200, '../images/espejo.jpg', '../images/espejoc.jpg', 7, 1, 200)
+const repuesto9 = new Repuesto('Ópticas faro led', 500, '../images/faros.jpg', '../images/farosc.jpg', 8, 1, 500)
 
 //Array donde iran los objetos "repuesto"
 const stockRepuestos = [];
@@ -38,6 +39,7 @@ pushToArray(stockRepuestos, repuesto1, repuesto2, repuesto3, repuesto4, repuesto
 //anclajes a DOM
 const cardsRepuestos = document.getElementById('cardsRepuestos')
 const itemsCarrito = document.getElementById('itemsCarrito')
+const footerCarrito = document.getElementById('footerCarrito')
 
 
 // muestra los productos en la página manipulando el DOM. Asigna un id dinámico para luego identificar qué producto mandar al carrito
@@ -63,13 +65,21 @@ for (let i = 0; i < stockRepuestos.length; i++) {
 const arrayStorage = [];
 
 
-// carga items del carrito si se encuentran en el localStorage
+// carga items del carrito si se encuentran en el localStorage--------------------------------------------------------------------------------------------------------------------------------
 if (localStorage.getItem('Array de repuestos')) {
     let getStorage = JSON.parse(localStorage.getItem(`Array de repuestos`))
+    /* las siguientes tres lineas se encargan de sumar el precio total de todos los items que hay en el carrito
+    Para eso pasamos a un array (arrayPrecioAcumulado) los valores de la key "precio" de cada uno de los objetos (productos)
+    que hay en el array "getStorage". Luego utilizamos un .reduce para sumar esos valores y reunirlos en un lugar único
+    (la variable "precioTotal") */
+    let arrayPrecioAcumulado = []
+    getStorage.forEach((x) => arrayPrecioAcumulado.push(x.precio))
+    let precioTotal = arrayPrecioAcumulado.reduce((acumulador, valorActual) => acumulador + valorActual)
 
-        itemsCarrito.innerHTML = '';
-        getStorage.forEach((item) => {
-            itemsCarrito.innerHTML += `
+
+    itemsCarrito.innerHTML = '';
+    getStorage.forEach((item) => {
+        itemsCarrito.innerHTML += `
                 <div class="card mb-4 shadow-sm p-3 mb-5 rounded" id="${item.id}">
                    <div class="row">
                        <div class="col-5 d-flex justify-content-center" >
@@ -88,27 +98,321 @@ if (localStorage.getItem('Array de repuestos')) {
                        </div>
                        <div class="col ">
                            <div class="btn-group-bg" style="margin-left: 16px;" role="group" aria-label="Basic example">
-                               <button type="button" class="btn btn-primary" id="">-</button>
+                               <button type="button" class="btn btn-primary" id="${item.id + 'b'}">-</button>
                                <button type="button" class="btn btn-primary">${item.cantidad}</button>
-                               <button type="button" class="btn btn-primary" id="">+</button>
+                               <button type="button" class="btn btn-primary" id="${item.id + 'c'}">+</button>
                            </div>
                        </div>
                    </div>
                 </div>
                    `
-        })
+        arrayStorage.push(stockRepuestos[item.id]) // sin esta linea, si luego agregamos más productos al carrito, no quedan guardados en el storage los productos cargados dentro de este condicional
+
+        footerCarrito.innerHTML = `
+                <hr>
+                <div class="row">
+                    <div class="col">Precio de mis productos</div>
+                    <div class="col-2">$${precioTotal}</div>
+                </div>
+                <div class="row">
+                    <div class="col"><p>Impuesto provisorio sancionado en 1969</p></div>
+                    <div class="col-2">$${precioTotal * 0.3}</div>
+                </div>
+                <div class="row">
+                    <div class="col"><p>Precio total</p></div>
+                    <div class="col-2">$${precioTotal * 0.3 + precioTotal}</div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-info">Comprar ahora</button>
+                </div>
+                   `
+
+
+
+    })
 
 }
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+//funcion que elimina productos del carrito (de su innerhtml y del local storage)
+const eliminar = (idInner, idArray) => {
+    document.getElementById(idInner).style.display = "none"; // remueve el producto del innerhtml del carrito
+
+    // de acá para bajo removemos el producto del local storage y del array 
+    let arrayAModificar = JSON.parse(localStorage.getItem('Array de repuestos'));
+
+    for (let i = 0; i < arrayAModificar.length; i++) {
+        if (`${arrayAModificar[i].id + 'a'}` == idArray) {
+            arrayAModificar.splice(i, 1)
+            arrayStorage.splice(i, 1)
+        }
+    }
+    if (arrayAModificar.length > 0) {
+        //guardamos el array cercenado en el localStorage, toda vez que haya al menos un elemento en el array
+        localStorage.setItem('Array de repuestos', JSON.stringify(arrayAModificar))
+
+        /*Actualizamos el innerHTML del footer del carrito. Para eso hacemos lo mismo que en las líneas 204-209
+         (por un tema de scope redeclaramos todo) */
+        let arrayPrecioAcumulado = []
+        arrayAModificar.forEach((x) => arrayPrecioAcumulado.push(x.precio))
+        let precioTotal = arrayPrecioAcumulado.reduce((acumulador, valorActual) => acumulador + valorActual)
+
+        footerCarrito.innerHTML = `
+            <hr>
+            <div class="row">
+                <div class="col">Precio de mis productos</div>
+                <div class="col-2">$${precioTotal}</div>
+            </div>
+            <div class="row">
+                <div class="col"><p>Impuesto provisorio sancionado en 1969</p></div>
+                <div class="col-2">$${precioTotal * 0.3}</div>
+            </div>
+            <div class="row">
+                <div class="col"><p>Precio total</p></div>
+                <div class="col-2">$${precioTotal * 0.3 + precioTotal}</div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-info">Comprar ahora</button>
+            </div>
+            `
+    }
+
+    else {
+        //si no hay items en el array de productos, eliminamos la key en el localStorage, y vaciamos el innerHTML del footer
+        localStorage.removeItem('Array de repuestos')
+        footerCarrito.innerHTML = ''
+    }
+}
+
+
+
+
+//función que suma unidades de un producto al carrito
+const sumaCantidad = (id) => {
+    let getStorage = JSON.parse(localStorage.getItem(`Array de repuestos`))
+
+    //recorremos el array de productos e incrementamos el precio y la cantidad acorde
+    for (let i = 0; i < getStorage.length; i++) {
+
+        if (getStorage[i].id + 'c' === id) {
+
+            getStorage[i].precio += getStorage[i].precioReferencia;
+            getStorage[i].cantidad++
+        }
+    }
+    localStorage.setItem('Array de repuestos', JSON.stringify(getStorage))
+
+    itemsCarrito.innerHTML = '';
+    getStorage.forEach((item) => {
+        itemsCarrito.innerHTML += `
+            <div class="card mb-4 shadow-sm p-3 mb-5 rounded" id="${item.id}">
+                <div class="row">
+                    <div class="col-5 d-flex justify-content-center" >
+                        <img class="card-img-left pb-2" src="${item.imagenChica}" alt="Card image cap">
+                    </div>
+                    <div class="col">
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">${item.nombre}</h5>
+                            <p class="card-text text-dark">Precio: $${item.precio}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row " >
+                    <div class="col-5 d-flex justify-content-center">
+                        <button class="eliminar btn btn-secondary btn-sm " id="${item.id + 'a'}"type="submit">Eliminar</button>
+                    </div>
+                    <div class="col ">
+                        <div class="btn-group-bg" style="margin-left: 16px;" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-primary" id="${item.id + 'b'}">-</button>
+                            <button type="button" class="btn btn-primary">${item.cantidad}</button>
+                            <button type="button" class="btn btn-primary" id="${item.id + 'c'}">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                `
+    })
+}
+
+
+//funcion que resta unidades a un producto del carrito
+const restaCantidad = (id) => {
+    
+    let getStorage = JSON.parse(localStorage.getItem(`Array de repuestos`))
+
+    //recorremos el array de productos y disminuimos el precio y la cantidad acorde
+    for (let i = 0; i < getStorage.length; i++) {
+
+        if (getStorage[i].id + 'b' === id && getStorage[i].cantidad > 1) {
+
+            getStorage[i].precio -= getStorage[i].precioReferencia;
+            getStorage[i].cantidad--
+        }
+    }
+    localStorage.setItem('Array de repuestos', JSON.stringify(getStorage))
+
+    itemsCarrito.innerHTML = '';
+    getStorage.forEach((item) => {
+        itemsCarrito.innerHTML += `
+            <div class="card mb-4 shadow-sm p-3 mb-5 rounded" id="${item.id}">
+                <div class="row">
+                    <div class="col-5 d-flex justify-content-center" >
+                        <img class="card-img-left pb-2" src="${item.imagenChica}" alt="Card image cap">
+                    </div>
+                    <div class="col">
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">${item.nombre}</h5>
+                            <p class="card-text text-dark">Precio: $${item.precio}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row " >
+                    <div class="col-5 d-flex justify-content-center">
+                        <button class="eliminar btn btn-secondary btn-sm " id="${item.id + 'a'}"type="submit">Eliminar</button>
+                    </div>
+                    <div class="col ">
+                        <div class="btn-group-bg" style="margin-left: 16px;" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-primary" id="${item.id + 'b'}">-</button>
+                            <button type="button" class="btn btn-primary">${item.cantidad}</button>
+                            <button type="button" class="btn btn-primary" id="${item.id + 'c'}">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                `
+    })
+
+
+}
+
+
+// un solo eventListener para todos los eventos que puedan ocurrir en el carrito (event delegation)
+itemsCarrito.addEventListener('click', (e) => {
+    let target = e.target;
+    console.log(target.id)
+    switch (target.id) {
+
+        // elimina el producto del innerhtml y del localStorage    
+        case '0a':
+            eliminar('0', '0a');
+            break;
+        case '1a':
+            eliminar('1', '1a');
+            break;
+        case '2a':
+            eliminar('2', '2a');
+            break
+        case '3a':
+            eliminar('3', '3a');
+            break;
+        case '4a':
+            eliminar('4', '4a');
+            break;
+        case '5a':
+            eliminar('5', '5a');
+            break;
+        case '6a':
+            eliminar('6', '6a')
+            break;
+        case '7a':
+            eliminar('7', '7a');
+            break;
+        case '8a':
+            eliminar('8', '8a');
+            break
+
+
+        //auemnta la cantidad en el carrito
+        case '0c':
+            sumaCantidad('0c');
+            break;
+        case '1c':
+            sumaCantidad('1c');
+            break;
+        case '2c':
+            sumaCantidad('2c');
+            break;
+        case '3c':
+            sumaCantidad('3c');
+            break;
+        case '4c':
+            sumaCantidad('4c');
+            break;
+        case '5c':
+            sumaCantidad('5c');
+            break;
+        case '6c':
+            sumaCantidad('6c');
+            break;
+        case '7c':
+            sumaCantidad('7c');
+            break;
+        case '8c':
+            sumaCantidad('8c');
+            break;
+
+
+        //disminuye la cantidad en el carrito
+            case '0b':
+                restaCantidad('0b');
+                break;
+            case '1b':
+                restaCantidad('1b');
+                break;
+            case '2b':
+                restaCantidad('2b');
+                break;
+            case '3b':
+                restaCantidad('3b');
+                break;
+            case '4b':
+                restaCantidad('4b');
+                break;
+            case '5b':
+                restaCantidad('5b');
+                break;
+            case '6b':
+                restaCantidad('6b');
+                break;
+            case '7b':
+                restaCantidad('7b');
+                break;
+            case '8b':
+                restaCantidad('8b');
+                break;
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Agrega items al carrito (y más funcionalidades -ver comentarios-)
 document.querySelectorAll('.alCarrito').forEach(item => {
     item.addEventListener('click', (e) => {
-
+        console.log(e.target.id)
         // Para no agregar dos veces el producto al carrito -----------------------------------------------------------------
         const check = arrayStorage.some((x) => x.id == e.target.id) // el .some nos devuelve true si el item ya se encuentra en el carrito (arrayStorage)
         // ¿e.target.id? chequea si el id del objeto es el mismo que el id del botón "aregar al carrito"
-    
+
         if (check) {
             Toastify({
                 text: "El producto ya está en el carrito 🤦‍♂️",
@@ -128,6 +432,7 @@ document.querySelectorAll('.alCarrito').forEach(item => {
             return console.log('ya lo tenes en el carrito') //en caso de que el item se encuentre en el carrito, usamos el return para cortar la ejecución del eventlistener
         }
         // ------------------------------------------------------------------------------------------------------------------
+
 
         arrayStorage.push(stockRepuestos[e.target.id]) // e.target.id hace referencia al botón "agregar al carrito", cuyo id dinámico es igual al respectivo indice del arrayStorage
 
@@ -156,15 +461,48 @@ document.querySelectorAll('.alCarrito').forEach(item => {
                        </div>
                        <div class="col ">
                            <div class="btn-group-bg" style="margin-left: 16px;" role="group" aria-label="Basic example">
-                               <button type="button" class="btn btn-primary" id="">-</button>
+                               <button type="button" class="btn btn-primary" id="${item.id + 'b'}">-</button>
                                <button type="button" class="btn btn-primary">${item.cantidad}</button>
-                               <button type="button" class="btn btn-primary" id="">+</button>
+                               <button type="button" class="btn btn-primary" id="${item.id + 'c'}">+</button>
                            </div>
                        </div>
                    </div>
                 </div>
                    `
+
         })
+
+
+        /* las siguientes tres lineas se encargan de sumar el precio total de todos los items que hay en el carrito
+        Para eso pasamos a un array (arrayPrecioAcumulado) los valores de la key "precio" de cada uno de los objetos (productos)
+        que hay en el array "getStorage". Luego utilizamos un .reduce para sumar esos valores y reunirlos en un lugar único
+        (la variable "precioTotal") */
+        let arrayPrecioAcumulado = []
+        getStorage.forEach((x) => arrayPrecioAcumulado.push(x.precio))
+        let precioTotal = arrayPrecioAcumulado.reduce((acumulador, valorActual) => acumulador + valorActual)
+
+
+        footerCarrito.innerHTML = `
+            <hr>
+            <div class="row">
+                <div class="col">Precio de mis productos</div>
+                <div class="col-2">$${precioTotal}</div>
+            </div>
+            <div class="row">
+                <div class="col"><p>Impuesto provisorio sancionado en 1969</p></div>
+                <div class="col-2">$${precioTotal * 0.3}</div>
+            </div>
+            <div class="row">
+                <div class="col"><p>Precio total</p></div>
+                <div class="col-2">$${precioTotal * 0.3 + precioTotal}</div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-info">Comprar ahora</button>
+            </div>
+                `
+
+
+
 
         // notifica al usuario que su producto ha sido agregado al carrito
         Toastify({
@@ -183,268 +521,7 @@ document.querySelectorAll('.alCarrito').forEach(item => {
         }).showToast();
     })
 
-    //remueve el producto del innerhtml del carrito
-    document.addEventListener('click', function (e) {
-        if (e.target && e.target.id == `${item.id + 'a'}`) {
-            document.getElementById(`${item.id}`).style.display = "none"; // remueve el producto del innerhtml del carrito
-
-            // de acá para bajo removemos el producto del local storage y del array 
-            let arrayAModificar = JSON.parse(localStorage.getItem('Array de repuestos'));
-
-            for (let i = 0; i < arrayAModificar.length; i++) {
-                if (`${arrayAModificar[i].id + 'a'}` == e.target.id) {
-                    arrayAModificar.splice(i,1)
-                    arrayStorage.splice(i,1)
-                }
-            }
-            localStorage.setItem('Array de repuestos', JSON.stringify(arrayAModificar))
-        }
-    });
 })
-
-
-// document.addEventListener('click', function(e){
-
-//                     if(e.target && e.target.id== idEliminar){
-//                         document.getElementById(idCard).style.display = "none";  
-//                     }
-//                 });
-
-
-// const borrar = document.getElementsByClassName('eliminar');
-// console.log('eliminar')
-
-// document.getElementsByClassName('eliminar').forEach(item => {
-//     item.addEventListener('click', () => {
-
-//        console.log('hokdsakodokasdok')
-
-//     })
-// })
-
-// Mandando productos al local storage--------------------------------------------------------------------------------------------------------------------------
-
-
-
-// let idBotonRepuesto = document.getElementById('')
-
-// Mandamos los productos al array y luego al storage
-// for (let i = 0; i < stockRepuestos.length; i++) {
-//     let idBotonRepuesto = document.getElementById(i);
-//     idBotonRepuesto.addEventListener('click', () => {
-//         arrayStorage.push(stockRepuestos[i])
-//         localStorage.setItem('Array de repuestos', JSON.stringify(arrayStorage))
-//     })
-
-
-
-//     let idEliminar = `a${i}` // id dinamicos para el botón que elimina del carrito
-//     let idCard = `b${i}` // id's dinámicos para el div que contiene la carta
-//     let idMas = `c${i}` // id's dinámicos para el botoncito que suma unidades al carrito
-//     let idMenos = `d${i}` // id's dinámicos para el botoncito que resta unidades al carrito
-
-
-// //  manipula DOM en base a los valores del local storage
-//     idBotonRepuesto.addEventListener('click', () => {
-//         let getStorage = JSON.parse(localStorage.getItem(`Array de repuestos`))
-//         itemsCarrito.innerHTML = '';
-//         getStorage.forEach((item) => {
-//             itemsCarrito.innerHTML += `
-//            <div class="card mb-4 shadow-sm p-3 mb-5 rounded" id="${idCard}">
-//             <div class="row">
-//                 <div class="col-5 d-flex justify-content-center" >
-//                     <img class="card-img-left pb-2" src="${item.imagenChica}" alt="Card image cap">
-//                 </div>
-//                 <div class="col">
-//                     <div class="card-body">
-//                         <h5 class="card-title text-dark">${item.nombre}</h5>
-//                         <p class="card-text text-dark">Precio: $${item.precio}</p>
-//                     </div>
-//                 </div>
-//             </div>
-//             <div class="row " >
-//                 <div class="col-5 d-flex justify-content-center">
-//                     <button class="btn btn-secondary btn-sm eliminar" id="${idEliminar}"type="submit">Eliminar</button>
-//                 </div>
-//                 <div class="col ">
-//                     <div class="btn-group-bg" style="margin-left: 16px;" role="group" aria-label="Basic example">
-//                         <button type="button" class="btn btn-primary" id="${idMenos}">-</button>
-//                         <button type="button" class="btn btn-primary">${item.cantidad}</button>
-//                         <button type="button" class="btn btn-primary" id="${idMas}">+</button>
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//             `
-//         })
-//     })
-
-//     // document.addEventListener('click', function(e){
-//     //     e.stopImmediatePropagation
-//     //             if(e.target && e.target.id== idEliminar){
-//     //                 document.getElementById(idCard).style.display = "none";  
-//     //             }
-//     //         });
-
-//     // // event handler function sobre el botoncito que suma cantidad en el carrito        
-//     // document.addEventListener('click', function(e){
-//     //     if(e.target && e.target.id == idMas){
-//     //         console.log(e.target)
-
-//     //     }
-//     // });
-
-
-
-
-
-
-
-//     // document.addEventListener('click', function(e){
-//     //     if(e.target && e.target.id== idEliminar){
-//     //         localStorage.removeItem(`repuesto${i}`) 
-//     //     }
-//     // });
-
-
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-// //notifica al usuario que el item fue agregado al carrito
-// document.querySelectorAll('.alCarrito').forEach(item => {
-//     item.addEventListener('click', () => {
-//         //handle click 
-//         Toastify({
-//             text: "Agregado al carrito :)",
-//             duration: 4000,
-//             destination: "https://github.com/apvarun/toastify-js",
-//             newWindow: true,
-//             close: true,
-//             gravity: "bottom", // `top` or `bottom`
-//             position: "right", // `left`, `center` or `right`
-//             stopOnFocus: true, // Prevents dismissing of toast on hover
-//             style: {
-//                 background: "linear-gradient(to right, #00b09b, #96c93d)",
-//             },
-//             onClick: function () { } // Callback after click
-//         }).showToast();
-//     })
-// })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// carga configuración del DOM del carrito según local storage
-// for (let i = 0; i < stockRepuestos.length; i++) {
-//     if (JSON.parse(localStorage.getItem(`repuesto${i}`))) {
-//         let getStorage = JSON.parse(localStorage.getItem(`repuesto${i}`))
-//         let idEliminar = `a${i}` // id dinamicos para el botón que elimina del carrito
-//         let idCard = `b${i}` // id's dinámicos para el div que contiene la carta
-//         itemsCarrito.innerHTML += `
-//         <div class="card mb-4 shadow-sm p-3 mb-5 rounded" id="${idCard}">
-//             <div class="row">
-//                 <div class="col-5 d-flex justify-content-center" >
-//                     <img class="card-img-left pb-2" src="${getStorage.imagenChica}" alt="Card image cap">
-//                 </div>
-//                 <div class="col">
-//                     <div class="card-body">
-//                         <h5 class="card-title text-dark">${getStorage.nombre}</h5>
-//                         <p class="card-text text-dark">Precio: $${getStorage.precio}</p>
-//                     </div>
-//                 </div>
-//             </div>
-//             <div class="row " >
-//                 <div class="col-5 d-flex justify-content-center">
-//                     <button class="btn btn-secondary btn-sm eliminar" id="${idEliminar}"type="submit">Eliminar</button>
-//                 </div>
-//                 <div class="col ">
-//                     <div class="btn-group-bg" style="margin-left: 16px;" role="group" aria-label="Basic example">
-//                         <button type="button" class="btn btn-primary">-</button>
-//                         <button type="button" class="btn btn-primary">1</button>
-//                         <button type="button" class="btn btn-primary">+</button>
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-// //             `
-
-//     document.addEventListener('click', function(e){
-//         if(e.target && e.target.id== idEliminar){
-//             document.getElementById(idCard).style.display = "none";  
-//         }
-//     });
-//     document.addEventListener('click', function(e){
-//         if(e.target && e.target.id== idEliminar){
-//             localStorage.removeItem(`repuesto${i}`) 
-//         }
-//     });
-
-//     }
-// }
-
-// document.addEventListener('click', function(e){
-//     if(e.target && e.target.id== 'myDynamicallyAddedElementID'){
-//          console.log('pelotudo')
-//     }
-// });
-
-
-// // Manda los items al local storage
-// for (let i = 0; i < stockRepuestos.length; i++) {
-//     //manda items al local storage
-//     let idBotonRepuesto = document.getElementById(i);
-//     idBotonRepuesto.addEventListener('click', () => {
-//         localStorage.setItem(`repuesto${i}`, JSON.stringify(stockRepuestos[i]))
-//     })
-
-//     // manipula DOM
-//     idBotonRepuesto.addEventListener('click', () => {
-//         let getStorage = JSON.parse(localStorage.getItem(`repuesto${i}`))
-//         itemsCarrito.innerHTML += `
-//             <div class ="col">
-//                 <div class="card mb-4 shadow-sm p-3 mb-5 bg-secondary rounded" style="width: 18rem; display: inline-block;">
-//                     <img class="card-img-left" src="${getStorage.imagen}" alt="Card image cap">
-//                     <div class="card-body">
-//                         <h5 class="card-title" style="font-size:0.85vw">${getStorage.nombre}</h5>
-//                         <p class="card-text">Precio: ${getStorage.precio}</p>
-//                         <a class="btn btn-primary d-flex justify-content-center alCarrito" id="${i}">Agregar al carrito</a>
-//                     </div>
-//                 </div>
-//             </div>`
-//     })
-// }
-
-
-
-
-
-
-
-
 
 
 
