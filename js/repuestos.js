@@ -63,6 +63,7 @@ for (let i = 0; i < stockRepuestos.length; i++) {
 
 // En el locaStorage habrá un array que contiene los productos en forma de objetos
 const arrayStorage = [];
+localStorage.setItem('Array de repuestos', (arrayStorage))
 
 
 // carga items del carrito si se encuentran en el localStorage--------------------------------------------------------------------------------------------------------------------------------
@@ -136,6 +137,43 @@ if (localStorage.getItem('Array de repuestos')) {
 
 
 
+//
+const llenarCarrito = (storage) => {
+    itemsCarrito.innerHTML = '';
+    storage.forEach((item) => {
+        itemsCarrito.innerHTML += `
+            <div class="card mb-4 shadow-sm p-3 mb-5 rounded" id="${item.id}">
+                <div class="row">
+                    <div class="col-5 d-flex justify-content-center" >
+                        <img class="card-img-left pb-2" src="${item.imagenChica}" alt="Card image cap">
+                    </div>
+                    <div class="col">
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">${item.nombre}</h5>
+                            <p class="card-text text-dark">Precio: $${item.precio}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row " >
+                    <div class="col-5 d-flex justify-content-center">
+                        <button class="eliminar btn btn-secondary btn-sm " id="${item.id + 'a'}"type="submit">Eliminar</button>
+                    </div>
+                    <div class="col ">
+                        <div class="btn-group-bg" style="margin-left: 16px;" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-primary" id="${item.id + 'b'}">-</button>
+                            <button type="button" class="btn btn-primary">${item.cantidad}</button>
+                            <button type="button" class="btn btn-primary" id="${item.id + 'c'}">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                `
+    })
+}
+
+
+
+
 //funcion que establece el contenido del innerhtml del footer del carrito 
 const llenarFooter = (precio) => {
     footerCarrito.innerHTML = `
@@ -158,6 +196,8 @@ const llenarFooter = (precio) => {
     `
 }
 
+
+// ------------------------------------------------------
 
 //funcion que elimina productos del carrito (de su innerhtml y del local storage)
 const eliminar = (idInner, idArray) => {
@@ -195,7 +235,7 @@ const eliminar = (idInner, idArray) => {
 
 
 
-//función que suma unidades de un producto al carrito
+//función que suma unidades a un producto que ya está en el carrito
 const sumaCantidad = (id) => {
     let getStorage = JSON.parse(localStorage.getItem(`Array de repuestos`))
 
@@ -210,36 +250,7 @@ const sumaCantidad = (id) => {
     }
     localStorage.setItem('Array de repuestos', JSON.stringify(getStorage))
 
-    itemsCarrito.innerHTML = '';
-    getStorage.forEach((item) => {
-        itemsCarrito.innerHTML += `
-            <div class="card mb-4 shadow-sm p-3 mb-5 rounded" id="${item.id}">
-                <div class="row">
-                    <div class="col-5 d-flex justify-content-center" >
-                        <img class="card-img-left pb-2" src="${item.imagenChica}" alt="Card image cap">
-                    </div>
-                    <div class="col">
-                        <div class="card-body">
-                            <h5 class="card-title text-dark">${item.nombre}</h5>
-                            <p class="card-text text-dark">Precio: $${item.precio}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row " >
-                    <div class="col-5 d-flex justify-content-center">
-                        <button class="eliminar btn btn-secondary btn-sm " id="${item.id + 'a'}"type="submit">Eliminar</button>
-                    </div>
-                    <div class="col ">
-                        <div class="btn-group-bg" style="margin-left: 16px;" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-primary" id="${item.id + 'b'}">-</button>
-                            <button type="button" class="btn btn-primary">${item.cantidad}</button>
-                            <button type="button" class="btn btn-primary" id="${item.id + 'c'}">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                `
-    })
+    llenarCarrito(getStorage)
 
     //las siguientes tres lineas son necesarias para que llenarFooter(precioTotal) funcione adecuadamente, de lo contrario 'precioTotal' será undefined
     let arrayPrecioAcumulado = []
@@ -250,7 +261,9 @@ const sumaCantidad = (id) => {
 }
 
 
-//funcion que resta unidades a un producto del carrito
+
+
+//funcion que resta unidades a un producto que ya está en el carrito
 const restaCantidad = (id) => {
 
     let getStorage = JSON.parse(localStorage.getItem(`Array de repuestos`))
@@ -266,56 +279,130 @@ const restaCantidad = (id) => {
     }
     localStorage.setItem('Array de repuestos', JSON.stringify(getStorage))
 
-    itemsCarrito.innerHTML = '';
-    getStorage.forEach((item) => {
-        itemsCarrito.innerHTML += `
-            <div class="card mb-4 shadow-sm p-3 mb-5 rounded" id="${item.id}">
-                <div class="row">
-                    <div class="col-5 d-flex justify-content-center" >
-                        <img class="card-img-left pb-2" src="${item.imagenChica}" alt="Card image cap">
-                    </div>
-                    <div class="col">
-                        <div class="card-body">
-                            <h5 class="card-title text-dark">${item.nombre}</h5>
-                            <p class="card-text text-dark">Precio: $${item.precio}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row " >
-                    <div class="col-5 d-flex justify-content-center">
-                        <button class="eliminar btn btn-secondary btn-sm " id="${item.id + 'a'}"type="submit">Eliminar</button>
-                    </div>
-                    <div class="col ">
-                        <div class="btn-group-bg" style="margin-left: 16px;" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-primary" id="${item.id + 'b'}">-</button>
-                            <button type="button" class="btn btn-primary">${item.cantidad}</button>
-                            <button type="button" class="btn btn-primary" id="${item.id + 'c'}">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                `
-    })
+    llenarCarrito(getStorage)
 
     // ¿porque este condicional? Para que no se siga restando el precio si la cantidad de prodcuto es 1
     if (getStorage.length > 0) {
-     //las siguientes tres lineas son necesarias para que llenarFooter(precioTotal) funcione adecuadamente, de lo contrario 'precioTotal' será undefined
+        //las siguientes tres lineas son necesarias para que llenarFooter(precioTotal) funcione adecuadamente, de lo contrario 'precioTotal' será undefined
         let arrayPrecioAcumulado = []
         getStorage.forEach((x) => arrayPrecioAcumulado.push(x.precio))
         let precioTotal = arrayPrecioAcumulado.reduce((acumulador, valorActual) => acumulador + valorActual)
 
         llenarFooter(precioTotal)
     }
+}
+
+
+
+
+// funcion que agrega productos al carrito
+const agregarCarrito = (id) => {
+
+    const check = arrayStorage.some((x) => x.id == id) // el .some nos devuelve true si el item ya se encuentra en el carrito (arrayStorage)
+    // ¿e.target.id? chequea si el id del objeto es el mismo que el id del botón "aregar al carrito"
+
+    if (check) {
+        Toastify({
+            text: "El producto ya está en el carrito 🤦‍♂️",
+            duration: 3000,
+            destination: "https://github.com/apvarun/toastify-js",
+            newWindow: true,
+            close: true,
+            gravity: "bottom",
+            position: "right",
+            stopOnFocus: true,
+            style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+            },
+            onClick: function () { } // Callback after click
+        }).showToast();
+
+        return console.log('ya lo tenes en el carrito') //en caso de que el item se encuentre en el carrito, usamos el return para cortar la ejecución del eventlistener
+    }
+    // ------------------------------------------------------------------------------------------------------------------
+
+
+    arrayStorage.push(stockRepuestos[id]) // e.target.id hace referencia al botón "agregar al carrito", cuyo id dinámico es igual al respectivo indice del arrayStorage
+
+    localStorage.setItem('Array de repuestos', JSON.stringify(arrayStorage))
+
+    let getStorage = JSON.parse(localStorage.getItem(`Array de repuestos`))
+
+    llenarCarrito(getStorage)
+
+
+    /* las siguientes tres lineas se encargan de sumar el precio total de todos los items que hay en el carrito
+    Para eso pasamos a un array (arrayPrecioAcumulado) los valores de la key "precio" de cada uno de los objetos (productos)
+    que hay en el array "getStorage". Luego utilizamos un .reduce para sumar esos valores y reunirlos en un lugar único
+    (la variable "precioTotal") */
+    let arrayPrecioAcumulado = []
+    getStorage.forEach((x) => arrayPrecioAcumulado.push(x.precio))
+    let precioTotal = arrayPrecioAcumulado.reduce((acumulador, valorActual) => acumulador + valorActual)
+
+    llenarFooter(precioTotal)
+
+
+
+    // notifica al usuario que su producto ha sido agregado al carrito
+    Toastify({
+        text: "Agregado al carrito 🛒",
+        duration: 3000,
+        destination: "https://github.com/apvarun/toastify-js",
+        newWindow: true,
+        close: true,
+        gravity: "bottom", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+        },
+        onClick: function () { } // Callback after click
+    }).showToast();
 
 
 }
 
 
+
 // un solo eventListener para todos los eventos que puedan ocurrir en el carrito (event delegation)
-itemsCarrito.addEventListener('click', (e) => {
+document.addEventListener('click', (e) => {
     let target = e.target;
     console.log(target.id)
     switch (target.id) {
+
+
+        //agrega productos al carrito
+        case '0':
+            agregarCarrito('0');
+            break;
+        case '1':
+            agregarCarrito('1');
+            break;
+        case '2':
+            agregarCarrito('2');
+            break;
+        case '3':
+            agregarCarrito('3');
+            break;
+        case '4':
+            agregarCarrito('4');
+            break;
+        case '5':
+            agregarCarrito('5');
+            break;
+        case '6':
+            agregarCarrito('6');
+            break;
+        case '7':
+            agregarCarrito('7');
+            break;
+        case '8':
+            agregarCarrito('8');
+            break;
+
+
+
+
 
         // elimina el producto del innerhtml y del localStorage    
         case '0a':
@@ -425,123 +512,128 @@ itemsCarrito.addEventListener('click', (e) => {
 
 
 
-// Agrega items al carrito (y más funcionalidades -ver comentarios-)
-document.querySelectorAll('.alCarrito').forEach(item => {
-    item.addEventListener('click', (e) => {
-        console.log(e.target.id)
-        // Para no agregar dos veces el producto al carrito -----------------------------------------------------------------
-        const check = arrayStorage.some((x) => x.id == e.target.id) // el .some nos devuelve true si el item ya se encuentra en el carrito (arrayStorage)
-        // ¿e.target.id? chequea si el id del objeto es el mismo que el id del botón "aregar al carrito"
+// // Agrega items al carrito (y más funcionalidades -ver comentarios-)
+// document.querySelectorAll('.alCarrito').forEach(item => {
+//     item.addEventListener('click', (e) => {
+//         //console.log(e.target.id)
+//         // Para no agregar dos veces el producto al carrito -----------------------------------------------------------------
+//         const check = arrayStorage.some((x) => x.id == e.target.id) // el .some nos devuelve true si el item ya se encuentra en el carrito (arrayStorage)
+//         // ¿e.target.id? chequea si el id del objeto es el mismo que el id del botón "aregar al carrito"
 
-        if (check) {
-            Toastify({
-                text: "El producto ya está en el carrito 🤦‍♂️",
-                duration: 3000,
-                destination: "https://github.com/apvarun/toastify-js",
-                newWindow: true,
-                close: true,
-                gravity: "bottom",
-                position: "right",
-                stopOnFocus: true,
-                style: {
-                    background: "linear-gradient(to right, #00b09b, #96c93d)",
-                },
-                onClick: function () { } // Callback after click
-            }).showToast();
+//         if (check) {
+//             Toastify({
+//                 text: "El producto ya está en el carrito 🤦‍♂️",
+//                 duration: 3000,
+//                 destination: "https://github.com/apvarun/toastify-js",
+//                 newWindow: true,
+//                 close: true,
+//                 gravity: "bottom",
+//                 position: "right",
+//                 stopOnFocus: true,
+//                 style: {
+//                     background: "linear-gradient(to right, #00b09b, #96c93d)",
+//                 },
+//                 onClick: function () { } // Callback after click
+//             }).showToast();
 
-            return console.log('ya lo tenes en el carrito') //en caso de que el item se encuentre en el carrito, usamos el return para cortar la ejecución del eventlistener
-        }
-        // ------------------------------------------------------------------------------------------------------------------
-
-
-        arrayStorage.push(stockRepuestos[e.target.id]) // e.target.id hace referencia al botón "agregar al carrito", cuyo id dinámico es igual al respectivo indice del arrayStorage
-
-        localStorage.setItem('Array de repuestos', JSON.stringify(arrayStorage))
-
-        let getStorage = JSON.parse(localStorage.getItem(`Array de repuestos`))
-
-        itemsCarrito.innerHTML = '';
-        getStorage.forEach((item) => {
-            itemsCarrito.innerHTML += `
-                <div class="card mb-4 shadow-sm p-3 mb-5 rounded" id="${item.id}">
-                   <div class="row">
-                       <div class="col-5 d-flex justify-content-center" >
-                           <img class="card-img-left pb-2" src="${item.imagenChica}" alt="Card image cap">
-                       </div>
-                       <div class="col">
-                           <div class="card-body">
-                               <h5 class="card-title text-dark">${item.nombre}</h5>
-                               <p class="card-text text-dark">Precio: $${item.precio}</p>
-                           </div>
-                       </div>
-                   </div>
-                   <div class="row " >
-                       <div class="col-5 d-flex justify-content-center">
-                           <button class="eliminar btn btn-secondary btn-sm " id="${item.id + 'a'}"type="submit">Eliminar</button>
-                       </div>
-                       <div class="col ">
-                           <div class="btn-group-bg" style="margin-left: 16px;" role="group" aria-label="Basic example">
-                               <button type="button" class="btn btn-primary" id="${item.id + 'b'}">-</button>
-                               <button type="button" class="btn btn-primary">${item.cantidad}</button>
-                               <button type="button" class="btn btn-primary" id="${item.id + 'c'}">+</button>
-                           </div>
-                       </div>
-                   </div>
-                </div>
-                   `
-
-        })
+//             return console.log('ya lo tenes en el carrito') //en caso de que el item se encuentre en el carrito, usamos el return para cortar la ejecución del eventlistener
+//         }
+//         // ------------------------------------------------------------------------------------------------------------------
 
 
-        /* las siguientes tres lineas se encargan de sumar el precio total de todos los items que hay en el carrito
-        Para eso pasamos a un array (arrayPrecioAcumulado) los valores de la key "precio" de cada uno de los objetos (productos)
-        que hay en el array "getStorage". Luego utilizamos un .reduce para sumar esos valores y reunirlos en un lugar único
-        (la variable "precioTotal") */
-        let arrayPrecioAcumulado = []
-        getStorage.forEach((x) => arrayPrecioAcumulado.push(x.precio))
-        let precioTotal = arrayPrecioAcumulado.reduce((acumulador, valorActual) => acumulador + valorActual)
+//         arrayStorage.push(stockRepuestos[e.target.id]) // e.target.id hace referencia al botón "agregar al carrito", cuyo id dinámico es igual al respectivo indice del arrayStorage
+
+//         localStorage.setItem('Array de repuestos', JSON.stringify(arrayStorage))
+
+//         let getStorage = JSON.parse(localStorage.getItem(`Array de repuestos`))
+
+//         itemsCarrito.innerHTML = '';
+//         getStorage.forEach((item) => {
+//             itemsCarrito.innerHTML += `
+//                 <div class="card mb-4 shadow-sm p-3 mb-5 rounded" id="${item.id}">
+//                    <div class="row">
+//                        <div class="col-5 d-flex justify-content-center" >
+//                            <img class="card-img-left pb-2" src="${item.imagenChica}" alt="Card image cap">
+//                        </div>
+//                        <div class="col">
+//                            <div class="card-body">
+//                                <h5 class="card-title text-dark">${item.nombre}</h5>
+//                                <p class="card-text text-dark">Precio: $${item.precio}</p>
+//                            </div>
+//                        </div>
+//                    </div>
+//                    <div class="row " >
+//                        <div class="col-5 d-flex justify-content-center">
+//                            <button class="eliminar btn btn-secondary btn-sm " id="${item.id + 'a'}"type="submit">Eliminar</button>
+//                        </div>
+//                        <div class="col ">
+//                            <div class="btn-group-bg" style="margin-left: 16px;" role="group" aria-label="Basic example">
+//                                <button type="button" class="btn btn-primary" id="${item.id + 'b'}">-</button>
+//                                <button type="button" class="btn btn-primary">${item.cantidad}</button>
+//                                <button type="button" class="btn btn-primary" id="${item.id + 'c'}">+</button>
+//                            </div>
+//                        </div>
+//                    </div>
+//                 </div>
+//                    `
+
+//         })
 
 
-        footerCarrito.innerHTML = `
-            <hr>
-            <div class="row">
-                <div class="col">Precio de mis productos</div>
-                <div class="col-2">$${precioTotal}</div>
-            </div>
-            <div class="row">
-                <div class="col"><p>Impuesto provisorio sancionado en 1969</p></div>
-                <div class="col-2">$${precioTotal * 0.3}</div>
-            </div>
-            <div class="row">
-                <div class="col"><p>Precio total</p></div>
-                <div class="col-2">$${precioTotal * 0.3 + precioTotal}</div>
-            </div>
-            <div class="d-flex justify-content-center">
-                <button type="button" class="btn btn-info">Comprar ahora</button>
-            </div>
-                `
+//         /* las siguientes tres lineas se encargan de sumar el precio total de todos los items que hay en el carrito
+//         Para eso pasamos a un array (arrayPrecioAcumulado) los valores de la key "precio" de cada uno de los objetos (productos)
+//         que hay en el array "getStorage". Luego utilizamos un .reduce para sumar esos valores y reunirlos en un lugar único
+//         (la variable "precioTotal") */
+//         let arrayPrecioAcumulado = []
+//         getStorage.forEach((x) => arrayPrecioAcumulado.push(x.precio))
+//         let precioTotal = arrayPrecioAcumulado.reduce((acumulador, valorActual) => acumulador + valorActual)
+
+
+//         footerCarrito.innerHTML = `
+//             <hr>
+//             <div class="row">
+//                 <div class="col">Precio de mis productos</div>
+//                 <div class="col-2">$${precioTotal}</div>
+//             </div>
+//             <div class="row">
+//                 <div class="col"><p>Impuesto provisorio sancionado en 1969</p></div>
+//                 <div class="col-2">$${precioTotal * 0.3}</div>
+//             </div>
+//             <div class="row">
+//                 <div class="col"><p>Precio total</p></div>
+//                 <div class="col-2">$${precioTotal * 0.3 + precioTotal}</div>
+//             </div>
+//             <div class="d-flex justify-content-center">
+//                 <button type="button" class="btn btn-info">Comprar ahora</button>
+//             </div>
+//                 `
 
 
 
 
-        // notifica al usuario que su producto ha sido agregado al carrito
-        Toastify({
-            text: "Agregado al carrito 🛒",
-            duration: 3000,
-            destination: "https://github.com/apvarun/toastify-js",
-            newWindow: true,
-            close: true,
-            gravity: "bottom", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-            style: {
-                background: "linear-gradient(to right, #00b09b, #96c93d)",
-            },
-            onClick: function () { } // Callback after click
-        }).showToast();
-    })
+//         // notifica al usuario que su producto ha sido agregado al carrito
+//         Toastify({
+//             text: "Agregado al carrito 🛒",
+//             duration: 3000,
+//             destination: "https://github.com/apvarun/toastify-js",
+//             newWindow: true,
+//             close: true,
+//             gravity: "bottom", // `top` or `bottom`
+//             position: "right", // `left`, `center` or `right`
+//             stopOnFocus: true, // Prevents dismissing of toast on hover
+//             style: {
+//                 background: "linear-gradient(to right, #00b09b, #96c93d)",
+//             },
+//             onClick: function () { } // Callback after click
+//         }).showToast();
+//     })
 
-})
+// })
+
+
+
+
+
 
 
 
