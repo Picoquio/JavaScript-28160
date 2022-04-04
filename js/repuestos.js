@@ -136,7 +136,27 @@ if (localStorage.getItem('Array de repuestos')) {
 
 
 
-
+//funcion que establece el contenido del innerhtml del footer del carrito 
+const llenarFooter = (precio) => {
+    footerCarrito.innerHTML = `
+    <hr>
+    <div class="row">
+        <div class="col">Precio de mis productos</div>
+        <div class="col-2">$${precio}</div>
+    </div>
+    <div class="row">
+        <div class="col"><p>Impuesto provisorio sancionado en 1969</p></div>
+        <div class="col-2">$${precio * 0.3}</div>
+    </div>
+    <div class="row">
+        <div class="col"><p>Precio total</p></div>
+        <div class="col-2">$${precio * 0.3 + precio}</div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <button type="button" class="btn btn-info">Comprar ahora</button>
+    </div>
+    `
+}
 
 
 //funcion que elimina productos del carrito (de su innerhtml y del local storage)
@@ -144,42 +164,25 @@ const eliminar = (idInner, idArray) => {
     document.getElementById(idInner).style.display = "none"; // remueve el producto del innerhtml del carrito
 
     // de acá para bajo removemos el producto del local storage y del array 
-    let arrayAModificar = JSON.parse(localStorage.getItem('Array de repuestos'));
+    let getStorage = JSON.parse(localStorage.getItem('Array de repuestos'));
 
-    for (let i = 0; i < arrayAModificar.length; i++) {
-        if (`${arrayAModificar[i].id + 'a'}` == idArray) {
-            arrayAModificar.splice(i, 1)
+    for (let i = 0; i < getStorage.length; i++) {
+        if (`${getStorage[i].id + 'a'}` == idArray) {
+            getStorage.splice(i, 1)
             arrayStorage.splice(i, 1)
         }
     }
-    if (arrayAModificar.length > 0) {
+    if (getStorage.length > 0) {
         //guardamos el array cercenado en el localStorage, toda vez que haya al menos un elemento en el array
-        localStorage.setItem('Array de repuestos', JSON.stringify(arrayAModificar))
+        localStorage.setItem('Array de repuestos', JSON.stringify(getStorage))
 
         /*Actualizamos el innerHTML del footer del carrito. Para eso hacemos lo mismo que en las líneas 204-209
          (por un tema de scope redeclaramos todo) */
         let arrayPrecioAcumulado = []
-        arrayAModificar.forEach((x) => arrayPrecioAcumulado.push(x.precio))
+        getStorage.forEach((x) => arrayPrecioAcumulado.push(x.precio))
         let precioTotal = arrayPrecioAcumulado.reduce((acumulador, valorActual) => acumulador + valorActual)
 
-        footerCarrito.innerHTML = `
-            <hr>
-            <div class="row">
-                <div class="col">Precio de mis productos</div>
-                <div class="col-2">$${precioTotal}</div>
-            </div>
-            <div class="row">
-                <div class="col"><p>Impuesto provisorio sancionado en 1969</p></div>
-                <div class="col-2">$${precioTotal * 0.3}</div>
-            </div>
-            <div class="row">
-                <div class="col"><p>Precio total</p></div>
-                <div class="col-2">$${precioTotal * 0.3 + precioTotal}</div>
-            </div>
-            <div class="d-flex justify-content-center">
-                <button type="button" class="btn btn-info">Comprar ahora</button>
-            </div>
-            `
+        llenarFooter(precioTotal)
     }
 
     else {
@@ -237,12 +240,19 @@ const sumaCantidad = (id) => {
             </div>
                 `
     })
+
+    //las siguientes tres lineas son necesarias para que llenarFooter(precioTotal) funcione adecuadamente, de lo contrario 'precioTotal' será undefined
+    let arrayPrecioAcumulado = []
+    getStorage.forEach((x) => arrayPrecioAcumulado.push(x.precio))
+    let precioTotal = arrayPrecioAcumulado.reduce((acumulador, valorActual) => acumulador + valorActual)
+
+    llenarFooter(precioTotal)
 }
 
 
 //funcion que resta unidades a un producto del carrito
 const restaCantidad = (id) => {
-    
+
     let getStorage = JSON.parse(localStorage.getItem(`Array de repuestos`))
 
     //recorremos el array de productos y disminuimos el precio y la cantidad acorde
@@ -286,6 +296,16 @@ const restaCantidad = (id) => {
             </div>
                 `
     })
+
+    // ¿porque este condicional? Para que no se siga restando el precio si la cantidad de prodcuto es 1
+    if (getStorage.length > 0) {
+     //las siguientes tres lineas son necesarias para que llenarFooter(precioTotal) funcione adecuadamente, de lo contrario 'precioTotal' será undefined
+        let arrayPrecioAcumulado = []
+        getStorage.forEach((x) => arrayPrecioAcumulado.push(x.precio))
+        let precioTotal = arrayPrecioAcumulado.reduce((acumulador, valorActual) => acumulador + valorActual)
+
+        llenarFooter(precioTotal)
+    }
 
 
 }
@@ -358,33 +378,33 @@ itemsCarrito.addEventListener('click', (e) => {
 
 
         //disminuye la cantidad en el carrito
-            case '0b':
-                restaCantidad('0b');
-                break;
-            case '1b':
-                restaCantidad('1b');
-                break;
-            case '2b':
-                restaCantidad('2b');
-                break;
-            case '3b':
-                restaCantidad('3b');
-                break;
-            case '4b':
-                restaCantidad('4b');
-                break;
-            case '5b':
-                restaCantidad('5b');
-                break;
-            case '6b':
-                restaCantidad('6b');
-                break;
-            case '7b':
-                restaCantidad('7b');
-                break;
-            case '8b':
-                restaCantidad('8b');
-                break;
+        case '0b':
+            restaCantidad('0b');
+            break;
+        case '1b':
+            restaCantidad('1b');
+            break;
+        case '2b':
+            restaCantidad('2b');
+            break;
+        case '3b':
+            restaCantidad('3b');
+            break;
+        case '4b':
+            restaCantidad('4b');
+            break;
+        case '5b':
+            restaCantidad('5b');
+            break;
+        case '6b':
+            restaCantidad('6b');
+            break;
+        case '7b':
+            restaCantidad('7b');
+            break;
+        case '8b':
+            restaCantidad('8b');
+            break;
     }
 })
 
