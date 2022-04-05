@@ -62,82 +62,20 @@ for (let i = 0; i < stockRepuestos.length; i++) {
 
 
 // En el locaStorage habrá un array que contiene los productos en forma de objetos
+
 const arrayStorage = [];
-localStorage.setItem('Array de repuestos', (arrayStorage))
 
-
-// carga items del carrito si se encuentran en el localStorage--------------------------------------------------------------------------------------------------------------------------------
 if (localStorage.getItem('Array de repuestos')) {
     let getStorage = JSON.parse(localStorage.getItem(`Array de repuestos`))
-    /* las siguientes tres lineas se encargan de sumar el precio total de todos los items que hay en el carrito
-    Para eso pasamos a un array (arrayPrecioAcumulado) los valores de la key "precio" de cada uno de los objetos (productos)
-    que hay en el array "getStorage". Luego utilizamos un .reduce para sumar esos valores y reunirlos en un lugar único
-    (la variable "precioTotal") */
-    let arrayPrecioAcumulado = []
-    getStorage.forEach((x) => arrayPrecioAcumulado.push(x.precio))
-    let precioTotal = arrayPrecioAcumulado.reduce((acumulador, valorActual) => acumulador + valorActual)
-
-
-    itemsCarrito.innerHTML = '';
-    getStorage.forEach((item) => {
-        itemsCarrito.innerHTML += `
-                <div class="card mb-4 shadow-sm p-3 mb-5 rounded" id="${item.id}">
-                   <div class="row">
-                       <div class="col-5 d-flex justify-content-center" >
-                           <img class="card-img-left pb-2" src="${item.imagenChica}" alt="Card image cap">
-                       </div>
-                       <div class="col">
-                           <div class="card-body">
-                               <h5 class="card-title text-dark">${item.nombre}</h5>
-                               <p class="card-text text-dark">Precio: $${item.precio}</p>
-                           </div>
-                       </div>
-                   </div>
-                   <div class="row " >
-                       <div class="col-5 d-flex justify-content-center">
-                           <button class="eliminar btn btn-secondary btn-sm " id="${item.id + 'a'}"type="submit">Eliminar</button>
-                       </div>
-                       <div class="col ">
-                           <div class="btn-group-bg" style="margin-left: 16px;" role="group" aria-label="Basic example">
-                               <button type="button" class="btn btn-primary" id="${item.id + 'b'}">-</button>
-                               <button type="button" class="btn btn-primary">${item.cantidad}</button>
-                               <button type="button" class="btn btn-primary" id="${item.id + 'c'}">+</button>
-                           </div>
-                       </div>
-                   </div>
-                </div>
-                   `
-        arrayStorage.push(stockRepuestos[item.id]) // sin esta linea, si luego agregamos más productos al carrito, no quedan guardados en el storage los productos cargados dentro de este condicional
-
-        footerCarrito.innerHTML = `
-                <hr>
-                <div class="row">
-                    <div class="col">Precio de mis productos</div>
-                    <div class="col-2">$${precioTotal}</div>
-                </div>
-                <div class="row">
-                    <div class="col"><p>Impuesto provisorio sancionado en 1969</p></div>
-                    <div class="col-2">$${precioTotal * 0.3}</div>
-                </div>
-                <div class="row">
-                    <div class="col"><p>Precio total</p></div>
-                    <div class="col-2">$${precioTotal * 0.3 + precioTotal}</div>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-info">Comprar ahora</button>
-                </div>
-                   `
-
-
-
-    })
+    for (let i = 0; i < getStorage.length; i++) {
+        arrayStorage.push(getStorage[i])
+    }
 
 }
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
-//
+// funcion que establece el contenido del innerhtml del body principal del carrito
 const llenarCarrito = (storage) => {
     itemsCarrito.innerHTML = '';
     storage.forEach((item) => {
@@ -212,14 +150,14 @@ const eliminar = (idInner, idArray) => {
             arrayStorage.splice(i, 1)
         }
     }
-    if (getStorage.length > 0) {
+    if (arrayStorage.length > 0) {
         //guardamos el array cercenado en el localStorage, toda vez que haya al menos un elemento en el array
-        localStorage.setItem('Array de repuestos', JSON.stringify(getStorage))
+        localStorage.setItem('Array de repuestos', JSON.stringify(arrayStorage))
 
         /*Actualizamos el innerHTML del footer del carrito. Para eso hacemos lo mismo que en las líneas 204-209
          (por un tema de scope redeclaramos todo) */
         let arrayPrecioAcumulado = []
-        getStorage.forEach((x) => arrayPrecioAcumulado.push(x.precio))
+        arrayStorage.forEach((x) => arrayPrecioAcumulado.push(x.precio))
         let precioTotal = arrayPrecioAcumulado.reduce((acumulador, valorActual) => acumulador + valorActual)
 
         llenarFooter(precioTotal)
@@ -246,6 +184,9 @@ const sumaCantidad = (id) => {
 
             getStorage[i].precio += getStorage[i].precioReferencia;
             getStorage[i].cantidad++
+            arrayStorage[i].precio += arrayStorage[i].precioReferencia;
+            arrayStorage[i].cantidad++
+
         }
     }
     localStorage.setItem('Array de repuestos', JSON.stringify(getStorage))
@@ -275,6 +216,8 @@ const restaCantidad = (id) => {
 
             getStorage[i].precio -= getStorage[i].precioReferencia;
             getStorage[i].cantidad--
+            arrayStorage[i].precio -= arrayStorage[i].precioReferencia;
+            arrayStorage[i].cantidad--
         }
     }
     localStorage.setItem('Array de repuestos', JSON.stringify(getStorage))
@@ -326,9 +269,9 @@ const agregarCarrito = (id) => {
 
     localStorage.setItem('Array de repuestos', JSON.stringify(arrayStorage))
 
-    let getStorage = JSON.parse(localStorage.getItem(`Array de repuestos`))
 
-    llenarCarrito(getStorage)
+
+    llenarCarrito(arrayStorage)
 
 
     /* las siguientes tres lineas se encargan de sumar el precio total de todos los items que hay en el carrito
@@ -336,7 +279,7 @@ const agregarCarrito = (id) => {
     que hay en el array "getStorage". Luego utilizamos un .reduce para sumar esos valores y reunirlos en un lugar único
     (la variable "precioTotal") */
     let arrayPrecioAcumulado = []
-    getStorage.forEach((x) => arrayPrecioAcumulado.push(x.precio))
+    arrayStorage.forEach((x) => arrayPrecioAcumulado.push(x.precio))
     let precioTotal = arrayPrecioAcumulado.reduce((acumulador, valorActual) => acumulador + valorActual)
 
     llenarFooter(precioTotal)
@@ -362,12 +305,29 @@ const agregarCarrito = (id) => {
 
 }
 
+// carga items del carrito si se encuentran en el localStorage--------------------------------------------------------------------------------------------------------------------------------
+if (localStorage.getItem('Array de repuestos')) {
+    let getStorage = JSON.parse(localStorage.getItem(`Array de repuestos`))
+    
+
+    llenarCarrito(getStorage)
+
+    /* las siguientes tres lineas se encargan de sumar el precio total de todos los items que hay en el carrito
+    Para eso pasamos a un array (arrayPrecioAcumulado) los valores de la key "precio" de cada uno de los objetos (productos)
+    que hay en el array "getStorage". Luego utilizamos un .reduce para sumar esos valores y reunirlos en un lugar único
+    (la variable "precioTotal") */
+    let arrayPrecioAcumulado = []
+    getStorage.forEach((x) => arrayPrecioAcumulado.push(x.precio))
+    let precioTotal = arrayPrecioAcumulado.reduce((acumulador, valorActual) => acumulador + valorActual)
+    llenarFooter(precioTotal)
+}
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 // un solo eventListener para todos los eventos que puedan ocurrir en el carrito (event delegation)
 document.addEventListener('click', (e) => {
     let target = e.target;
-    console.log(target.id)
+    //console.log(target.id)
     switch (target.id) {
 
 
