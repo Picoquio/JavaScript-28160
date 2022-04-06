@@ -1,97 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://bootswatch.com/5/lumen/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
+    <link href="https://bootswatch.com/5/lumen/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
 </head>
-<body>
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
+<body
+    style="background-image: url(https://images.unsplash.com/photo-1574023278981-0b48ba10e9ba?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80); background-size: cover;">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-        
+
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Stock</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./pages/repuestos.html">Repuestos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./pages/vende.html" id="vende">Vende tu auto</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Stock</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./pages/repuestos.html">Repuestos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./pages/vende.html" id="vende">Vende tu auto</a>
+                    </li>
                 </ul>
-                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                <!-- EL CARRITO ES VISIBLE UNICAMENTE DESDE LA PÁGINA "REPUESTOS", HASTA QUE IMPLEMENTE EXPORTS DE JS -->
+                <!-- <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                     Ver carrito
-                </button>
+                </button> -->
             </div>
         </div>
     </nav>
 
-   <!-- Código del offcanvas -->
-   <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasExample"
-   aria-labelledby="offcanvasExampleLabel">
+   <!-- OFFCANVAS NO IMPLEMENTADO EN ESTA PÁGINA HASTA QUE IMPLEMENTE EXPORTS DE JS -->
+    <!-- Código del offcanvas -->
+    <!-- <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasExample"
+        aria-labelledby="offcanvasExampleLabel"> -->
 
-   <!-- Header e imagen del carrito -->
-   <div class="bg-primary bg-gradient pb-3">
-       <div class="d-flex justify-content-end">
-           <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-               aria-label="Close"></button>
-       </div>
-       <div class="text-center">
-           <img src="../images/carrito-de-compras2.png" class="img-fluid rounded-circle rounded bg-white" alt="">
-       </div>
-   </div>
+        <!-- Header e imagen del carrito -->
+        <!-- <div class="bg-primary bg-gradient pb-3">
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="text-center">
+                <img src="../images/carrito-de-compras2.png" class="img-fluid rounded-circle rounded bg-white" alt="">
+            </div>
+        </div> -->
 
-   <!-- body del offcanvas -->
-   <div class="offcanvas-body bg-primary text-white">
-       <div>
-           <h5 class="text-white text-center">Mi carrito</h6>
-       </div>
-       <hr>
-       <!-- Acá van los items del carrito (vía manipulación del DOM)-->
-       <div class="" id="itemsCarrito"></div>
-       <div class="footerCarrito">
-           
-       </div>
-   </div>
+        <!-- body del offcanvas -->
+        <!-- <div class="offcanvas-body bg-primary text-white">
+            <div>
+                <h5 class="text-white text-center">Mi carrito</h6>
+            </div>
+            <hr> -->
+            <!-- Acá van los items del carrito (vía manipulación del DOM)-->
+            <!-- <div class="" id="itemsCarrito"></div>
+            <div class="footerCarrito">
 
-</div>
+            </div>
+        </div>
+
+    </div> -->
+
+
 
     <!-- Contenedor principal -->
-    <div class="container " style="background-color: rgb(240, 253, 253);">
-        
+    <div class="container " style="background-color: rgb(240, 253, 253); opacity: 0.95">
+
         <!-- Acá va el clima, conectado a una API -->
         <div class="overflow-hidden " style="height: 2.5rem;">
             <div class="row ">
                 <div class="col-10"></div>
                 <div class="col-2 text-center " style="background-color: rgb(237, 227, 227);" id="clima">
                 </div>
-            </div> 
+            </div>
         </div>
 
         <!-- Contenedor del Form y los autos -->
         <div class="row pt-4">
 
             <!-- Acá va el form -->
-            <div class="col-4"> 
+            <div class="col-4">
                 <form class="shadow p-3 mb-5 bg-body rounded sticky-top" id="filterForm">
                     <div class="mb-3">
-                        <label for="marca" class="form-label" >Marca</label>
+                        <label for="marca" class="form-label">Marca</label>
                         <select id="marca" name="marca" class="form-control">
-                         <option value="Ford">Ford</option>
-                         <option value="Toyota">Toyota</option>
-                         <option value="Honda">Honda</option>
-                       </select>
+                            <option value="Ford">Ford</option>
+                            <option value="Toyota">Toyota</option>
+                            <option value="Honda">Honda</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="modelo" class="form-label">Modelo</label>
@@ -99,40 +107,48 @@
                     </div>
                     <div class="mb-3">
                         <label for="fabricacion" class="form-label">Año de fabricación</label>
-                        <input type="number" id="fabricacion" name="fabricacion" class="form-control" min="1990" max="2022">
+                        <input type="number" id="fabricacion" name="fabricacion" class="form-control" min="1990"
+                            max="2022">
                     </div>
-                    <div class="mb-3"> 
+                    <div class="mb-3">
                         <label for="precioMin" class="form-label">Precio mínimo</label>
                         <input type="number" id="precioMin" name="precioMin" class="form-control" required>
                     </div>
-                    <div class="mb-3"> 
+                    <div class="mb-3">
                         <label for="precioMax" class="form-label">Precio máximo</label>
                         <input type="number" id="precioMax" name="precioMax" class="form-control" required>
                     </div>
                     <div class="mb-3" id="aver">
                         <p>¿Usado o 0km?</p>
-                         <input type="radio" id="0km" name="respuesta" value="0km" required checked>
-                         <label for="0km" class="form-label">0km</label>
-                         <br>
-                         <input type="radio" id="usado" name="respuesta" value="usado" required>
-                         <label for="usado" class="form-label">Usado</label>
+                        <input type="radio" id="0km" name="respuesta" value="0km" required checked>
+                        <label for="0km" class="form-label">0km</label>
+                        <br>
+                        <input type="radio" id="usado" name="respuesta" value="usado" required>
+                        <label for="usado" class="form-label">Usado</label>
                     </div>
                     <button type="submit" class="btn btn-primary">Filtrar búsqueda</button>
                     <button type="button" class="btn btn-primary" id="mostrarStockTotal">Ver stock total</button>
-                 </form>
+                </form>
             </div>
 
             <!-- Acá se cargan los autos (vía manipulación del DOM) -->
             <div class="col-8">
+                <div id="tituloProductos"></div>
                 <div class="row row-cols-3" id="cardsAutos">
+
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
-    
 
-    <script src="./js/index.js"></script> 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <script src="./js/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
 </body>
+
 </html>

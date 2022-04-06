@@ -26,14 +26,14 @@ const repuesto4 = new Repuesto('Bomba de nafta', 700, '../images/bombaNafta.jpg'
 const repuesto5 = new Repuesto('Liquido refrigerante', 180, '../images/refrigerante.jpg', '../images/refrigerantec.jpg', 4, 1, 180)
 const repuesto6 = new Repuesto('Liquido transmisión', 180, '../images/liquidoTransmision.jpg', '../images/liquidoTransmisionc.jpg', 5, 1, 180)
 const repuesto7 = new Repuesto('Aceite lubricante', 180, '../images/aceite.jpg', '../images/aceitec.jpg', 6, 1, 180)
-const repuesto8 = new Repuesto('Espejo retrovisor', 200, '../images/espejo.jpg', '../images/espejoc.jpg', 7, 1, 200)
-const repuesto9 = new Repuesto('Ópticas faro led', 500, '../images/faros.jpg', '../images/farosc.jpg', 8, 1, 500)
+//const repuesto8 = new Repuesto('Espejo retrovisor', 200, '../images/espejo.jpg', '../images/espejoc.jpg', 7, 1, 200)
+const repuesto8 = new Repuesto('Ópticas faro led', 500, '../images/faros.jpg', '../images/farosc.jpg', 8, 1, 500)
 
 //Array donde iran los objetos "repuesto"
 const stockRepuestos = [];
 
 //llenamos el array de repuestos
-pushToArray(stockRepuestos, repuesto1, repuesto2, repuesto3, repuesto4, repuesto5, repuesto6, repuesto7, repuesto8, repuesto9)
+pushToArray(stockRepuestos, repuesto1, repuesto2, repuesto3, repuesto4, repuesto5, repuesto6, repuesto7, repuesto8)
 
 
 //anclajes a DOM
@@ -166,7 +166,7 @@ const eliminar = (idInner, idArray) => {
     else {
         //si no hay items en el array de productos, eliminamos la key en el localStorage, y vaciamos el innerHTML del footer
         localStorage.removeItem('Array de repuestos')
-        footerCarrito.innerHTML = ''
+        footerCarrito.innerHTML = 'Tu carrito está vacío. 🐭'
     }
 }
 
@@ -320,6 +320,9 @@ if (localStorage.getItem('Array de repuestos')) {
     getStorage.forEach((x) => arrayPrecioAcumulado.push(x.precio))
     let precioTotal = arrayPrecioAcumulado.reduce((acumulador, valorActual) => acumulador + valorActual)
     llenarFooter(precioTotal)
+}
+else {
+    itemsCarrito.innerHTML = 'Tu carrito está vacío. 🐭'
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

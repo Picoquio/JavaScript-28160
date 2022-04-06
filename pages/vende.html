@@ -10,7 +10,7 @@
     <title>Vende tu auto</title>
 </head>
 
-<body>
+<body style="background-image: url(https://images.unsplash.com/photo-1574023278981-0b48ba10e9ba?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80); background-size: cover;">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Navbar</a>
@@ -37,19 +37,22 @@
                     </li>
 
                 </ul>
-                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                <!-- EL CARRITO ES VISIBLE UNICAMENTE DESDE LA PÁGINA "REPUESTOS", HASTA QUE IMPLEMENTE EXPORTS DE JS -->
+                <!-- <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                     Ver carrito
-                </button>
+                </button> -->
             </div>
         </div>
     </nav>
 
+    
+    <!-- OFFCANVAS NO IMPLEMENTADO EN ESTA PÁGINA HASTA QUE IMPLEMENTE EXPORTS DE JS -->
     <!-- Código del offcanvas -->
-    <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasExample"
-        aria-labelledby="offcanvasExampleLabel">
+    <!-- <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasExample"
+        aria-labelledby="offcanvasExampleLabel"> -->
 
         <!-- Header e imagen del carrito -->
-        <div class="bg-primary bg-gradient pb-3">
+        <!-- <div class="bg-primary bg-gradient pb-3">
             <div class="d-flex justify-content-end">
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                     aria-label="Close"></button>
@@ -57,25 +60,25 @@
             <div class="text-center">
                 <img src="../images/carrito-de-compras2.png" class="img-fluid rounded-circle rounded bg-white" alt="">
             </div>
-        </div>
+        </div> -->
 
         <!-- body del offcanvas -->
-        <div class="offcanvas-body bg-primary text-white">
+        <!-- <div class="offcanvas-body bg-primary text-white">
             <div>
                 <h5 class="text-white text-center">Mi carrito</h6>
             </div>
-            <hr>
+            <hr> -->
             <!-- Acá van los items del carrito (vía manipulación del DOM)-->
-            <div class="" id="itemsCarrito"></div>
+            <!-- <div class="" id="itemsCarrito"></div>
             <div class="footerCarrito">
 
             </div>
         </div>
 
-    </div>
+    </div> -->
 
 
-    <div class="container" style="background-color: rgb(240, 253, 253);">
+    <div class="container " style="background-color: rgb(240, 253, 253); opacity: 0.95;">
 
         <div class="overflow-hidden" style="height: 2.5rem;">
             <div class="row">
@@ -94,7 +97,7 @@
         </div>
         <!-- form  -->
         <div class="row pt-4 justify-content-md-center">
-            <div class="col-6">
+            <div class="col-6  ">
                 <form class="shadow p-3 mb-5 bg-body rounded" id="formVenta">
                     <div class="mb-3">
                         <label for="marca" class="form-label">Marca</label>
@@ -127,6 +130,7 @@
                     </div>
                 </form>
             </div>
+        </div>
 
 
             <script src="../js/venta.js"></script>

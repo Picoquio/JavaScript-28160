@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 
-<body>
+<body style="background-image: url(https://images.unsplash.com/photo-1574023278981-0b48ba10e9ba?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80); background-size: cover;">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
@@ -63,31 +63,16 @@
             <hr>
             <!-- Acá van los items del carrito (vía manipulación del DOM)-->
             <div class="" id="itemsCarrito"></div>
-            
-                <!-- <div class="footerCarrito shadow bg-dark w-100 position-relative bottom-0">
-                    <h4>Precio total: 2000</h4>
-                </div> -->
-            <footer class="" id="footerCarrito">
-                <!-- <hr>
-                <div class="row">
-                    <div class="col">Precio de mis productos</div>
-                    <div class="col-2">$200</div>
-                </div>
-                <div class="row">
-                    <div class="col"><p>Impuesto provisorio sancionado en 1969</p></div>
-                    <div class="col-2">$300</div>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-info">Comprar ahora</button>
-                </div> -->
-            </footer>
-        
+
+            <!--Acá el contenido del footer del carrito (vía manipulación del DOM)  -->
+            <footer class="" id="footerCarrito"></footer>
+
         </div>
 
     </div>
 
     <!-- Contenedor principal -->
-    <div class="container" style="background-color: rgb(240, 253, 253);">
+    <div class="container" style="background-color: rgb(240, 253, 253); opacity: 0.95">
 
         <!-- Clima en vivo -->
         <div class="overflow-hidden" style="height: 2.5rem;">
@@ -99,8 +84,12 @@
         </div>
 
         <!--Título "repuestos"-->
-        <div class="row pt-4">
-            <h1>Repuestos</h1>
+        <div class="container">
+            <div class="row pt-4 pb-4">
+                <div class="col text-center ">
+                    <h1 class="display-6 ">Repuestos</h1>
+                </div>
+            </div>
         </div>
 
         <!-- Acá van las cards de los repuestos (vía manipulación del DOM) -->
@@ -117,60 +106,3 @@
 </body>
 
 </html>
-
-
-<!-- <div class="card mb-4 shadow-sm p-3 mb-5 rounded d-flex justify-content-center ">
-    <div class="row">
-        <div class="col-4">
-            <img class="card-img-left d-inline" src="${getStorage.imagen}" alt="Card image cap">
-        </div>
-        <div class="col-6">
-            <div class="card-body">
-                <h5 class="card-title text-dark">${getStorage.nombre}</h5>
-                <p class="card-text text-dark">Precio: $${getStorage.precio}</p>
-            </div>
-        </div>
-        <div class="col-2">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-secondary">-</button>
-                <button type="button" class="btn btn-secondary">1</button>
-                <button type="button" class="btn btn-secondary">+</button>
-              </div>
-        </div>
-    </div>
-</div> -->
-
-<!-- <div class="card mb-4 shadow-sm p-3 mb-5 rounded d-flex justify-content-center ">
-    <div class="row">
-        <div class="col-4">
-            <img class="card-img-left d-inline" src="${getStorage.imagen}" alt="Card image cap">
-        </div>
-        <div class="col-8">
-            <div class="card-body">
-                <h5 class="card-title text-dark">${getStorage.nombre}</h5>
-                <p class="card-text text-dark">Precio: $${getStorage.precio}</p>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-4">
-            <button class="btn btn-secondary btn-sm" type="submit">Eliminar</button>
-        </div>
-        <div class="div">
-            <div class="btn-group-bg d-flex justify-content-center" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary">-</button>
-                <button type="button" class="btn btn-primary">1</button>
-                <button type="button" class="btn btn-primary">+</button>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-
-
-
-
-
-
-
-
