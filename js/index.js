@@ -52,14 +52,14 @@ class AutoPorForm {
 }
 
 //vamos llenando nuestro stock inicial de autos
-const auto1 = new NuevoAutoUsado('Honda', 'Accord', 2009, 20000, '../images/accord.jpg', 0);
-const auto2 = new NuevoAutoUsado('Ford', 'Mondeo', 2014, 28000, '../images/mondeo.jpg', 1);
-const auto3 = new NuevoAutoUsado('Toyota', 'Corolla', 2011, 18000, '../images/corolla.jpg', 2);
-const auto4 = new NuevoAutoUsado('Toyota', 'SW4', 2015, 40000, '../images/sw4.jpg', 3);
-const auto5 = new NuevoAutoUsado('Ford', 'Ranger', 2016, 42000, '../images/ranger.jpg', 4);
-const auto6 = new NuevoAuto0Km('Toyota', 'Hilux', 2022, 60000, '../images/hilux.jpg', 5);
-const auto7 = new NuevoAuto0Km('Ford', 'F-150', 2022, 70000, '../images/f150.jpg', 6);
-const auto8 = new NuevoAuto0Km('Honda', 'Passport', 2022, 80000, '../images/passport.jpg', 7);
+const auto1 = new NuevoAutoUsado('Honda', 'Accord', 2009, 20000, './images/accord.jpg', 0);
+const auto2 = new NuevoAutoUsado('Ford', 'Mondeo', 2014, 28000, './images/mondeo.jpg', 1);
+const auto3 = new NuevoAutoUsado('Toyota', 'Corolla', 2011, 18000, './images/corolla.jpg', 2);
+const auto4 = new NuevoAutoUsado('Toyota', 'SW4', 2015, 40000, './images/sw4.jpg', 3);
+const auto5 = new NuevoAutoUsado('Ford', 'Ranger', 2016, 42000, './images/ranger.jpg', 4);
+const auto6 = new NuevoAuto0Km('Toyota', 'Hilux', 2022, 60000, './images/hilux.jpg', 5);
+const auto7 = new NuevoAuto0Km('Ford', 'F-150', 2022, 70000, './images/f150.jpg', 6);
+const auto8 = new NuevoAuto0Km('Honda', 'Passport', 2022, 80000, './images/passport.jpg', 7);
 
 //Array donde irá el stock total de autos
 const stockTotal = [];
